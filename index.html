@@ -21,38 +21,6 @@
             overflow-x: hidden; 
         }
 
-        /* Language Switcher Styling */
-        .language-switcher {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            display: flex;
-            gap: 10px;
-            z-index: 100; /* Acima do header */
-        }
-        .language-switcher button {
-            background: none;
-            border: 2px solid #e91e63;
-            color: #e91e63;
-            padding: 5px 8px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.9em;
-            font-weight: bold;
-            transition: background-color 0.3s, color 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .language-switcher button:hover, .language-switcher button.active {
-            background-color: #e91e63;
-            color: white;
-        }
-        .language-switcher button .flag {
-            font-size: 1.2em;
-        }
-
-
         /* Pop-up Inicial Styling */
         .popup-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -87,9 +55,10 @@
 
         /* Dancing Duck Styling */
         #dancingDuck {
-            font-size: 2.5em; /* Tamanho do pato */
+            font-size: 2.5em; 
             margin-left: 10px;
-            display: inline-block; /* Para animação */
+            margin-right: 10px; /* Espaço antes do seletor de idioma */
+            display: inline-block; 
             transition: transform 0.2s ease-in-out;
         }
         .duck-dance {
@@ -110,13 +79,28 @@
         }
         .now-playing-bar p { margin: 0 5px 0 0; display: inline-flex; align-items: center; }
         .now-playing-bar .music-icon { margin-right: 8px; font-size: 1.1em; }
-        .now-playing-bar #songSelector {
+        .now-playing-bar #songSelector, .now-playing-bar #languageSelectorDropdown { /* Estilo unificado */
             background-color: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.5); padding: 5px 8px;
             border-radius: 5px; font-family: 'Poppins', sans-serif; font-size: 0.9em; margin-left: 10px; outline: none; cursor: pointer;
         }
-        .now-playing-bar #songSelector option { background-color: #e91e63; color: white; }
+        .now-playing-bar #songSelector option, .now-playing-bar #languageSelectorDropdown option { 
+            background-color: #e91e63; color: white; 
+        }
+        .now-playing-bar #languageSelectorDropdown {
+            padding: 5px; /* Ajuste para não cortar a bandeira */
+            font-size: 1.1em; /* Para bandeiras ficarem com bom tamanho */
+             -webkit-appearance: none; /* Remove aparência padrão no Chrome/Safari */
+            -moz-appearance: none; /* Remove aparência padrão no Firefox */
+            appearance: none; /* Remove aparência padrão */
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); /* Seta customizada branca */
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            background-size: 10px;
+            padding-right: 25px; /* Espaço para a seta customizada */
+        }
 
-        .header { background-color: #f8bbd0; color: #c2185b; padding: 20px 0; text-align: center; width: 100%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); position:relative; /* Para o language switcher */ }
+
+        .header { background-color: #f8bbd0; color: #c2185b; padding: 20px 0; text-align: center; width: 100%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); position:relative; }
         .header h1 { font-family: 'Parisienne', cursive; font-size: 3.5em; margin: 0; }
         .audio-player-container { position: absolute; top: -9999px; left: -9999px; width: 1px; height: 1px; overflow: hidden; opacity: 0; }
         .container { max-width: 900px; width: 90%; margin: 30px auto; padding: 20px; background-color: white; border-radius: 12px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); text-align: center; }
@@ -158,9 +142,7 @@
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
         @media (max-width: 768px) {
-            .language-switcher { top: 5px; right: 10px; gap: 5px;}
-            .language-switcher button { padding: 4px 6px; font-size: 0.8em;}
-            .header h1 { font-size: 2.5em; } /* Reduzido para dar espaço ao seletor de idioma */
+            .header h1 { font-size: 2.8em; } /* Ajustado tamanho do titulo principal */
             .gallery-carousel { max-width: 95%; }
             .carousel-slide img { max-height: 300px; }
             .password-prompt h2 { font-size: 1.5em; }
@@ -168,18 +150,18 @@
             .letter-content h3 { font-size: 2.5em; }
             .letter-content p { font-size: 1.1em; }
             .now-playing-bar { font-size: 0.8em; padding: 8px 10px;} 
-            .now-playing-bar #songSelector { font-size: 0.85em; margin-left: 5px; margin-top: 5px;}
+            .now-playing-bar #songSelector, .now-playing-bar #languageSelectorDropdown { font-size: 0.85em; margin-left: 5px; margin-top: 5px;}
             .popup-content h2 { font-size: 2em; }
             .popup-content { padding: 20px; }
         }
          @media (max-width: 480px) {
-            .header h1 { font-size: 2em; }
+            .header h1 { font-size: 2.2em; }
             .letter-content h3 { font-size: 2em; }
             .carousel-slide img { max-height: 220px; }
             .carousel-button { padding: 8px 12px; font-size: 1.2em;}
             .now-playing-bar { font-size: 0.75em; padding: 6px 8px; flex-direction: column;}
             .now-playing-bar p { margin-bottom: 5px; }
-            .now-playing-bar #songSelector { font-size: 0.8em; margin-left: 0; margin-top: 5px; width: 80%;}
+            .now-playing-bar #songSelector, .now-playing-bar #languageSelectorDropdown { font-size: 0.8em; margin-left: 0; margin-top: 5px; width: 60%;}
             .popup-content h2 { font-size: 1.8em; }
             .popup-content .popup-buttons button { padding: 10px 15px; font-size: 1em; }
         }
@@ -210,16 +192,14 @@
 
     <div class="now-playing-bar">
         <p><span class="music-icon">🎵</span> <span data-lang="nowPlaying">Tocando agora</span>: <span id="currentSongName" data-lang-default="Nenhuma música">Nenhuma música</span></p>
-        <span id="dancingDuck">🦆</span> <!-- Pato Dançarino aqui -->
+        <span id="dancingDuck">🦆</span> 
         <select id="songSelector"></select> 
+        <select id="languageSelectorDropdown"></select> <!-- Seletor de idioma movido para cá -->
     </div>
     
     <header class="header">
-        <div class="language-switcher">
-            <button id="langPtButton" class="active"><span class="flag">🇧🇷</span> PT-BR</button>
-            <button id="langEsButton"><span class="flag">🇪🇸</span> ES</button>
-        </div>
-        <h1 data-lang="mainTitle">Para Meu Amor Bibia <span class="heart">❤</span></h1>
+        <!-- A div.language-switcher foi removida daqui -->
+        <h1 data-lang="mainTitle">Para Meu Amor, Bibia <span class="heart">❤</span></h1>
     </header>
 
     <div class="audio-player-container">
@@ -283,8 +263,7 @@
         const declarationParagraph = letterContent.querySelector('p');
         const currentSongNameDisplay = document.getElementById('currentSongName');
         const songSelector = document.getElementById('songSelector'); 
-        const langPtButton = document.getElementById('langPtButton');
-        const langEsButton = document.getElementById('langEsButton');
+        const languageSelectorDropdown = document.getElementById('languageSelectorDropdown'); // Novo seletor de idioma
 
         const correctAnswer = "oss";
         
@@ -295,9 +274,9 @@
         ];
         let shuffledPlaylist = []; 
         let currentTrackInShuffledList = 0; 
-        let currentLanguage = 'pt'; // Default language
+        let currentLanguage = 'pt'; 
 
-        // Language Strings
+        // Language Strings (permanecem os mesmos)
         const langStrings = {
             pt: {
                 pageTitle: "Feliz dias dos enamorados, Bibia ❤️",
@@ -329,7 +308,7 @@
                 popupNo: "No...",
                 nowPlaying: "Escuchando ahora",
                 noMusic: "Ninguna canción",
-                mainTitle: "Para Mi Amor Bibia <span class=\"heart\">❤</span>",
+                mainTitle: "Para Mi Amor, Bibia <span class=\"heart\">❤</span>",
                 altImage1: "Bibia - Foto 1",
                 captionImage1: "\"Tu sonrisa ilumina mis días...\"",
                 altImage2: "Bibia - Foto 2",
@@ -345,18 +324,18 @@
             }
         };
 
-        // Carousel Logic (remains the same)
+        // Carousel Logic (permanece o mesmo)
         let currentSlide = 0;
         const slides = document.querySelector('.carousel-slides');
         const totalSlides = slides ? slides.children.length : 0; 
         function showSlide(index) { if (slides) { slides.style.transform = `translateX(-${index * 100}%)`; } }
         function moveSlide(n) { if (totalSlides > 0) { currentSlide = (currentSlide + n + totalSlides) % totalSlides; showSlide(currentSlide); } }
 
-        // Rose Fireworks Logic (remains the same)
+        // Rose Fireworks Logic (permanece o mesmo)
         function createRoseParticle(x, y) { const particle = document.createElement('div'); particle.classList.add('rose-particle'); particle.innerHTML = '🌹'; particle.style.left = x + 'px'; particle.style.top = y + 'px'; roseFireworksContainer.appendChild(particle); const angle = Math.random() * Math.PI * 2; const speed = Math.random() * 5 + 2; const gravity = 0.1; let vx = Math.cos(angle) * speed; let vy = Math.sin(angle) * speed; let opacity = 1; let rotation = 0; const rotationSpeed = (Math.random() - 0.5) * 20; function animateParticle() { vx *= 0.98; vy += gravity; particle.style.left = (parseFloat(particle.style.left) + vx) + 'px'; particle.style.top = (parseFloat(particle.style.top) + vy) + 'px'; rotation += rotationSpeed; particle.style.transform = `rotate(${rotation}deg) scale(${opacity})`; opacity -= 0.015; if (opacity > 0) { requestAnimationFrame(animateParticle); } else { particle.remove(); } } requestAnimationFrame(() => { particle.style.opacity = 1; requestAnimationFrame(animateParticle); }); }
         function launchRoseFirework(count = 1) { for(let i = 0; i < count; i++) { const startX = Math.random() * window.innerWidth; const startY = window.innerHeight + 50; const numParticles = Math.floor(Math.random() * 20) + 15; const launchDuration = Math.random() * 500 + 300; setTimeout(() => { const explosionX = startX; const explosionY = Math.random() * (window.innerHeight / 2) + (window.innerHeight / 4); for (let j = 0; j < numParticles; j++) { createRoseParticle(explosionX, explosionY); } }, launchDuration); } }
         
-        // Pop-up Logic
+        // Pop-up Logic (permanece o mesmo)
         popupYesButton.addEventListener('click', () => {
             initialPopup.style.display = 'none';
             launchRoseFirework(5); 
@@ -369,7 +348,7 @@
         });
         popupNoButton.addEventListener('click', () => { window.location.href = 'https://www.google.com'; });
 
-        // Music Player Logic
+        // Music Player Logic (permanece o mesmo, exceto a chamada para populateSongSelector que agora acontece em updateTextContent)
         function shuffleArray(array) { let currentIndex = array.length, randomIndex; while (currentIndex !== 0) { randomIndex = Math.floor(Math.random() * currentIndex); currentIndex--; [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]]; } return array; }
         function prepareShuffledPlaylist() { shuffledPlaylist = shuffleArray([...originalSongList]); currentTrackInShuffledList = 0; }
         function formatSongName(songObject) { 
@@ -409,16 +388,15 @@
         backgroundMusic.onplay = () => { if(dancingDuck) dancingDuck.classList.add('duck-dance'); };
 
 
-        function populateSongSelector() {
+        function populateSongSelector() { // Usado também pelo seletor de idioma
             if (!songSelector) return; 
             songSelector.innerHTML = ''; 
             originalSongList.forEach(songObj => {
                 const option = document.createElement('option');
                 option.value = songObj.path;
-                option.textContent = formatSongName(songObj); // Usa a linguagem atual
+                option.textContent = formatSongName(songObj); 
                 songSelector.appendChild(option);
             });
-             // Atualiza o nome da música no display se uma já estiver selecionada/tocando
             const currentSource = backgroundMusic.querySelector('source');
             if (currentSource) {
                 const playingSongObj = originalSongList.find(s => s.path === currentSource.getAttribute('src'));
@@ -466,15 +444,14 @@
         
         // Language Switch Logic
         function updateTextContent(lang) {
-            document.documentElement.lang = lang.toUpperCase(); // ex: PT-BR ou ES
+            document.documentElement.lang = lang.toUpperCase(); 
             const elements = document.querySelectorAll('[data-lang]');
             elements.forEach(el => {
                 const key = el.dataset.lang;
                 if (langStrings[lang] && langStrings[lang][key]) {
-                    el.innerHTML = langStrings[lang][key]; // Use innerHTML para permitir tags como <span> no texto
+                    el.innerHTML = langStrings[lang][key]; 
                 }
             });
-
             const altElements = document.querySelectorAll('[data-lang-alt]');
             altElements.forEach(el => {
                 const key = el.dataset.langAlt;
@@ -482,7 +459,6 @@
                     el.alt = langStrings[lang][key];
                 }
             });
-            
             const placeholderElements = document.querySelectorAll('[data-lang-placeholder]');
             placeholderElements.forEach(el => {
                 const key = el.dataset.langPlaceholder;
@@ -490,47 +466,41 @@
                     el.placeholder = langStrings[lang][key];
                 }
             });
-
-            // Atualiza o texto da declaração
-            const declarationTextKey = `data-text-source-${lang}`;
-            if (declarationParagraph.hasAttribute(declarationTextKey)) {
-                 // Se o texto ainda não foi "digitado", apenas armazena para o typewriter usar.
-                 // Se já foi, e for implementada redigitação ao mudar idioma, aqui seria o local.
-                 // Por ora, o data-text-source para o typewriter será pego dinamicamente.
-            }
-            
-            // Atualiza título da janela (considerando o scroll)
             const pageTitleKey = 'pageTitle';
              if (langStrings[lang] && langStrings[lang][pageTitleKey]) {
-                // Para a função titleScroller, precisamos parar a antiga e iniciar uma nova
-                // Por simplicidade, aqui apenas definimos o título estático ao mudar. 
-                // A função de scroll pegará o novo título na próxima iteração se ela for reiniciada.
-                // Para uma atualização imediata do scroll, a lógica do titleScroller precisaria ser mais complexa.
                 document.title = langStrings[lang][pageTitleKey];
             }
-            
-            // Atualiza o texto 'Nenhuma música' se necessário
             const defaultSongDisplay = document.querySelector('[data-lang-default]');
-            if(defaultSongDisplay && backgroundMusic.paused && !backgroundMusic.currentTime) { // Se nenhuma música estiver tocando
+            if(defaultSongDisplay && backgroundMusic.paused && !backgroundMusic.currentTime) { 
                 currentSongNameDisplay.textContent = langStrings[lang].noMusic;
             }
-            populateSongSelector(); // Repopula o seletor de músicas com os nomes no idioma correto
+            populateSongSelector(); 
+            if(languageSelectorDropdown) languageSelectorDropdown.value = lang; // Sincroniza o seletor de idioma
         }
 
-        langPtButton.addEventListener('click', () => {
-            currentLanguage = 'pt';
-            updateTextContent('pt');
-            langPtButton.classList.add('active');
-            langEsButton.classList.remove('active');
-        });
+        function populateLanguageSelector() {
+            if (!languageSelectorDropdown) return;
+            languageSelectorDropdown.innerHTML = ''; // Limpa opções
+            
+            const ptOption = document.createElement('option');
+            ptOption.value = 'pt';
+            ptOption.textContent = '🇧🇷'; // Apenas bandeira
+            languageSelectorDropdown.appendChild(ptOption);
 
-        langEsButton.addEventListener('click', () => {
-            currentLanguage = 'es';
-            updateTextContent('es');
-            langEsButton.classList.add('active');
-            langPtButton.classList.remove('active');
-        });
+            const esOption = document.createElement('option');
+            esOption.value = 'es';
+            esOption.textContent = '🇪🇸'; // Apenas bandeira
+            languageSelectorDropdown.appendChild(esOption);
 
+            languageSelectorDropdown.value = currentLanguage; // Define o idioma atual como selecionado
+        }
+
+        if (languageSelectorDropdown) {
+            languageSelectorDropdown.addEventListener('change', function() {
+                currentLanguage = this.value;
+                updateTextContent(this.value);
+            });
+        }
 
         submitPasswordButton.addEventListener('click', function() {
             const enteredPassword = passwordInput.value.trim().toLowerCase();
@@ -538,15 +508,12 @@
                 passwordPrompt.style.display = 'none';
                 letterContent.style.display = 'block';
                 errorMessage.style.display = 'none';
-                
                 const declarationTextKey = `data-text-source-${currentLanguage}`;
-                const originalText = declarationParagraph.getAttribute(declarationTextKey) || declarationParagraph.getAttribute('data-text-source-pt'); // Fallback para PT se a chave do idioma atual não existir
-
+                const originalText = declarationParagraph.getAttribute(declarationTextKey) || declarationParagraph.getAttribute('data-text-source-pt'); 
                 setTimeout(() => {
                     declarationParagraph.contentEditable = "false"; 
                     typeWriter(declarationParagraph, originalText, 50);
                 }, 800); 
-
                 if (backgroundMusic.paused && (shuffledPlaylist.length > 0 && currentTrackInShuffledList < shuffledPlaylist.length)) {
                      const songToPlay = shuffledPlaylist[currentTrackInShuffledList] || shuffledPlaylist[0];
                      if(songToPlay) loadAndPlaySong(songToPlay);
@@ -563,7 +530,7 @@
                     playNextSongInShuffle();
                 }
             } else {
-                errorMessage.textContent = langStrings[currentLanguage].passwordError; // Usa texto de erro traduzido
+                errorMessage.textContent = langStrings[currentLanguage].passwordError; 
                 errorMessage.style.display = 'block';
                 passwordInput.value = '';
                 passwordInput.focus();
@@ -580,14 +547,13 @@
         // Inicializações ao carregar a página
         if (totalSlides > 0) { showSlide(currentSlide); }
         prepareShuffledPlaylist(); 
+        populateLanguageSelector(); // Popula o novo seletor de idioma
         updateTextContent(currentLanguage); // Define o idioma inicial e os textos
-        // A populateSongSelector() já é chamada dentro de updateTextContent()
 
-        (function titleScroller() { // Modificado para pegar o título atual
+        (function titleScroller() { 
             let currentTitle = document.title;
-             // Adiciona espaços se não existirem para o efeito de scroll
-            if (currentTitle.length < 30) { // Um número arbitrário para garantir que há espaços
-                currentTitle += "                "; // Adiciona espaços
+            if (currentTitle.length < 30) { 
+                currentTitle += "                "; 
             }
             document.title = currentTitle.substring(1) + currentTitle.substring(0,1);
             setTimeout(titleScroller, 300); 
