@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feliz dias dos enamorados, Bibia</title> <!-- MODIFICADO AQUI -->
+    <title>Feliz dias dos enamorados, Bibia</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Poppins:wght@300;400;700&family=Great+Vibes&display=swap');
@@ -59,40 +59,40 @@
         /* Carousel Styling */
         .gallery-carousel {
             position: relative;
-            max-width: 600px; /* Ou o tamanho que preferir para o carrossel */
+            max-width: 600px; 
             margin: 30px auto;
-            overflow: hidden; /* Essencial para o carrossel */
+            overflow: hidden; 
             border-radius: 10px;
-            background-color: #fff0f3; /* Fundo suave para o carrossel */
+            background-color: #fff0f3; 
             padding: 15px;
             box-shadow: 0 6px 12px rgba(0,0,0,0.1);
         }
 
         .carousel-slides {
-            display: flex; /* Alinha os slides horizontalmente */
-            transition: transform 0.5s ease-in-out; /* Animação da transição */
+            display: flex; 
+            transition: transform 0.5s ease-in-out; 
         }
 
         .carousel-slide {
-            min-width: 100%; /* Cada slide ocupa toda a largura do carrossel */
+            min-width: 100%; 
             box-sizing: border-box;
             text-align: center;
             padding: 10px;
         }
 
         .carousel-slide img {
-            max-width: 100%; /* Imagem se ajusta à largura do slide */
-            height: auto;   /* Mantém a proporção da imagem */
+            max-width: 100%; 
+            height: auto;   
             display: block;
-            margin: 0 auto 10px auto; /* Centraliza e adiciona espaço abaixo */
+            margin: 0 auto 10px auto; 
             border-radius: 8px;
             border: 3px solid white;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            object-fit: contain; /* Garante que a imagem inteira seja visível, mantendo a proporção */
-            max-height: 400px; /* Limite de altura para não ficar muito grande */
+            object-fit: contain; 
+            max-height: 400px; 
         }
 
-        .carousel-slide p { /* Legenda da imagem no carrossel */
+        .carousel-slide p { 
             font-size: 1.1em;
             color: #555;
             line-height: 1.6;
@@ -103,7 +103,7 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background-color: rgba(194, 24, 91, 0.7); /* Cor dos botões, com transparência */
+            background-color: rgba(194, 24, 91, 0.7); 
             color: white;
             border: none;
             padding: 10px 15px;
@@ -168,11 +168,11 @@
     </div>
 
     <header class="header">
-        <h1>Para Meu Amor, Bibia <span class="heart">❤</span></h1>
+        <h1>Para Meu Amor Bibia <span class="heart">❤</span></h1>
     </header>
 
     <div class="audio-player-container">
-        <audio id="backgroundMusic" loop> Seu navegador não suporta o elemento de áudio. </audio>
+        <audio id="backgroundMusic" loop preload="auto"> Seu navegador não suporta o elemento de áudio. </audio> <!-- MODIFICADO: preload="auto" -->
     </div>
 
     <main class="container">
@@ -189,13 +189,6 @@
                          onerror="this.onerror=null;this.src='https://placehold.co/600x400/f8bbd0/c2185b?text=Imagem+2+Nao+Encontrada';">
                     <p>"...e seus olhinhos de jabuticaba me encantam!"</p>
                 </div>
-                <!-- Adicione mais slides aqui se tiver mais fotos -->
-                <!-- 
-                <div class="carousel-slide">
-                    <img src="images/image3.jpg" alt="Bibia - Foto 3">
-                    <p>Outra legenda...</p>
-                </div>
-                -->
             </div>
             <button class="carousel-button prev" onclick="moveSlide(-1)">&#10094;</button>
             <button class="carousel-button next" onclick="moveSlide(1)">&#10095;</button>
@@ -247,21 +240,30 @@
         const totalSlides = document.querySelectorAll('.carousel-slide').length;
 
         function showSlide(index) {
-            if (slides) { // Adiciona verificação se 'slides' existe
+            if (slides) { 
                  slides.style.transform = `translateX(-${index * 100}%)`;
             }
         }
 
         function moveSlide(n) {
-            if (totalSlides > 0) { // Só move se houver slides
+            if (totalSlides > 0) { 
                 currentSlide = (currentSlide + n + totalSlides) % totalSlides;
                 showSlide(currentSlide);
             }
         }
         // End Carousel Logic
 
+        // MODIFICADO: Função para formatar nomes das músicas
         function formatSongName(filePath) {
-            let name = filePath.replace('music/', '').replace('.mp3', '');
+            const fileName = filePath.substring(filePath.lastIndexOf('/') + 1); // Pega apenas o nome do arquivo
+            
+            // Mapeamento específico para nomes de exibição
+            if (fileName === 'blurry.mp3') return 'Blurry';
+            if (fileName === 'justlikeheaven.mp3') return 'Just Like Heaven';
+            if (fileName === 'nothingcompares2u.mp3') return 'Nothing Compares 2 U';
+            
+            // Fallback para outros nomes de arquivo (remove extensão e capitaliza)
+            let name = fileName.replace('.mp3', '');
             name = name.replace(/_/g, ' ').replace(/-/g, ' '); 
             name = name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
             return name;
@@ -335,12 +337,16 @@
                     playRandomSong();
                 } else if (backgroundMusic.src.includes('music/') && backgroundMusic.paused){ 
                      backgroundMusic.play().then(() => {
-                        const songPath = backgroundMusic.querySelector('source') ? backgroundMusic.querySelector('source').src : "music/Desconhecida.mp3"; 
-                        currentSongNameDisplay.textContent = formatSongName(songPath.substring(songPath.lastIndexOf('/') + 1)); 
+                        const sourceTag = backgroundMusic.querySelector('source');
+                        if (sourceTag) {
+                           currentSongNameDisplay.textContent = formatSongName(sourceTag.src);
+                        }
                      }).catch(error => { console.log("Autoplay da música impedido: ", error); });
                 } else if (!backgroundMusic.paused) {
-                     const songPath = backgroundMusic.querySelector('source') ? backgroundMusic.querySelector('source').src : "music/Desconhecida.mp3"; 
-                     currentSongNameDisplay.textContent = formatSongName(songPath.substring(songPath.lastIndexOf('/') + 1));
+                     const sourceTag = backgroundMusic.querySelector('source');
+                     if (sourceTag) {
+                        currentSongNameDisplay.textContent = formatSongName(sourceTag.src);
+                     }
                 }
             } else {
                 errorMessage.textContent = 'Ops! Resposta incorreta. Tente novamente.';
@@ -357,18 +363,16 @@
             }
         });
 
-        // Initialize carousel on page load
-        if (totalSlides > 0) { // Só inicializa se houver slides
+        if (totalSlides > 0) { 
             showSlide(currentSlide);
         }
 
-        // Efeito de título da janela se movendo
         (function titleScroller(text) {
             document.title = text;
             setTimeout(function () {
                 titleScroller(text.substr(1) + text.substr(0, 1));
-            }, 300); // Velocidade do scroll (300ms)
-        }(" Feliz dias dos enamorados, Bibia ❤️               ")); // Adicionei espaços para um scroll mais suave
+            }, 300); 
+        }(" Feliz dias dos enamorados, Bibia ❤️               ")); 
 
     </script>
 </body>
