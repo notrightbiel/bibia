@@ -36,6 +36,25 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
+        /* Hidden YouTube Player Styling */
+        .youtube-player-container {
+            position: absolute; /* Position it off-screen */
+            top: -9999px;
+            left: -9999px;
+            width: 1px; /* Minimal size to ensure it loads */
+            height: 1px;
+            overflow: hidden; /* Hide any potential visual elements */
+            opacity: 0; /* Make it fully transparent */
+        }
+
+        .youtube-player-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        /* End Hidden YouTube Player Styling */
+
+
         .container {
             max-width: 900px;
             width: 90%;
@@ -162,11 +181,36 @@
         <h1>Para Meu Amor <span class="heart">❤</span></h1>
     </header>
 
+    <!-- Hidden YouTube Player -->
+    <div class="youtube-player-container">
+        <!--
+            INSTRUÇÕES PARA O PLAYER OCULTO:
+            1. Vá ao YouTube e encontre o vídeo que deseja.
+            2. Clique em "Compartilhar" (Share) abaixo do vídeo.
+            3. Clique em "Incorporar" (Embed).
+            4. Copie APENAS o URL que está dentro do atributo src="..." no código do iframe fornecido pelo YouTube.
+               Exemplo: https://www.youtube.com/embed/SEU_ID_DO_VIDEO
+            5. Substitua o URL abaixo (o que está em src="...") pelo URL que você copiou.
+            6. Para autoplay, adicione "?autoplay=1" ao final do URL.
+               Exemplo com autoplay: https://www.youtube.com/embed/SEU_ID_DO_VIDEO?autoplay=1
+               Nota: Autoplay com som pode ser bloqueado por navegadores até que o utilizador interaja com a página (ex: um clique).
+               Para aumentar a chance de autoplay funcionar sem interação, pode-se usar "&mute=1", mas isso silenciará o áudio.
+        -->
+        <iframe
+            src="https://www.youtube.com/embed/0U7XHtE5EQE?autoplay=1"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+        </iframe>
+    </div>
+    <!-- End Hidden YouTube Player -->
+
+
     <main class="container">
         <section class="gallery">
             <!-- Card com a primeira foto -->
             <div class="photo-card">
-                <img src="images/image1.jpg"" alt="Foto da minha amada 1">
+                <img src="images/image1.jpg" alt="Foto da minha amada 1">
                 <p>"Seu sorriso ilumina meus dias da forma mais especial que existe..."</p>
             </div>
 
@@ -181,14 +225,14 @@
             <h2>Minha Declaração</h2>
             <p contenteditable="true" class="border border-pink-300 p-3 rounded-md min-h-[100px] focus:outline-none focus:ring-2 focus:ring-pink-500">
                 Querida Bibia,<br><br>
-                Desde que você entrou na minha vida, tudo se tornou mais colorido e cheio de alegria. Seu jeito único, seu olhinhos de jabuticaba e a forma como você vê o mundo me encantam todos os dias.
+                Desde que você entrou na minha vida, tudo se tornou mais colorido e cheio de alegria. Seu jeito único, seu olhinho de jabuticaba e a forma como você vê o mundo me encantam todos os dias.
                 <br><br>
-                Neste Dia dos Namorados, quero demonstrar o quanto você é importante para mim. Você é minha inspiração, minha cúmplice e o meu amor.
+                Neste Dia dos Namorados, quero demonstra o quanto você é importante para mim. Você é minha inspiração, minha cúmplice e o meu amor.
                 <br><br>
                 Espero que este pequeno gesto possa demonstrar um pouco do imenso carinho que sinto por você.
                 <br><br>
                 Com todo o meu amor,<br>
-                Gabriel.
+                Gabriel
             </p>
         </section>
     </main>
