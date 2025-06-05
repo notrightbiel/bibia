@@ -18,152 +18,97 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            overflow-x: hidden; /* Prevenir scroll horizontal da animação */
-            cursor: default; /* Mantém o cursor padrão, o pato é um adorno */
+            overflow-x: hidden; 
         }
+
+        /* Language Switcher Styling */
+        .language-switcher {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+            z-index: 100; /* Acima do header */
+        }
+        .language-switcher button {
+            background: none;
+            border: 2px solid #e91e63;
+            color: #e91e63;
+            padding: 5px 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: bold;
+            transition: background-color 0.3s, color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .language-switcher button:hover, .language-switcher button.active {
+            background-color: #e91e63;
+            color: white;
+        }
+        .language-switcher button .flag {
+            font-size: 1.2em;
+        }
+
 
         /* Pop-up Inicial Styling */
         .popup-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(0, 0, 0, 0.7); 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000; 
-            backdrop-filter: blur(5px); 
+            display: flex; justify-content: center; align-items: center;
+            z-index: 1000; backdrop-filter: blur(5px); 
         }
-
         .popup-content {
-            background-color: #fff0f3; 
-            padding: 30px 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-            text-align: center;
-            max-width: 500px;
-            width: 90%;
-            border: 2px solid #e91e63; 
-            animation: fadeInPopup 0.5s ease-out;
-            position: relative; 
+            background-color: #fff0f3; padding: 30px 40px; border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25); text-align: center;
+            max-width: 500px; width: 90%; border: 2px solid #e91e63; 
+            animation: fadeInPopup 0.5s ease-out; position: relative; 
         }
-
-        @keyframes fadeInPopup {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .popup-content h2 {
-            font-family: 'Parisienne', cursive;
-            color: #c2185b;
-            font-size: 2.5em; 
-            margin-top: 0;
-            margin-bottom: 20px;
-        }
-
-        .hypnosis-svg {
-            width: 100px;
-            height: 100px;
-            margin: 15px auto;
-            animation: rotateHypnosis 4s linear infinite;
-        }
-
-        @keyframes rotateHypnosis {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        
-        .popup-content .popup-buttons {
-            margin-top: 25px;
-            display: flex;
-            justify-content: space-around; 
-        }
-
+        @keyframes fadeInPopup { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        .popup-content h2 { font-family: 'Parisienne', cursive; color: #c2185b; font-size: 2.5em; margin-top: 0; margin-bottom: 20px; }
+        .hypnosis-watch-svg { width: 120px; height: 150px; margin: 10px auto 15px auto; }
+        .watch-group { transform-origin: 50px 10px; animation: swingWatch 3s ease-in-out infinite alternate; }
+        @keyframes swingWatch { 0% { transform: rotate(-35deg); } 100% { transform: rotate(35deg); } }
+        .popup-content .popup-buttons { margin-top: 25px; display: flex; justify-content: space-around; }
         .popup-content .popup-buttons button {
-            background-color: #e91e63;
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            min-width: 100px; 
-            z-index: 1001; 
+            background-color: #e91e63; color: white; padding: 12px 25px; border: none;
+            border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease; min-width: 100px; z-index: 1001; 
         }
-        .popup-content .popup-buttons button:hover {
-            background-color: #c2185b;
-            transform: translateY(-2px);
-        }
-        .popup-content .popup-buttons button.no-button {
-            background-color: #757575; 
-        }
-        .popup-content .popup-buttons button.no-button:hover {
-            background-color: #555555;
-        }
-        /* End Pop-up Inicial Styling */
+        .popup-content .popup-buttons button:hover { background-color: #c2185b; transform: translateY(-2px); }
+        .popup-content .popup-buttons button.no-button { background-color: #757575; }
+        .popup-content .popup-buttons button.no-button:hover { background-color: #555555; }
 
         /* Rose Fireworks Styling */
-        #roseFireworksContainer {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none; 
-            z-index: 999; 
-            overflow: hidden;
-        }
+        #roseFireworksContainer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; overflow: hidden; }
+        .rose-particle { position: absolute; font-size: 20px; opacity: 0; }
 
-        .rose-particle {
-            position: absolute;
-            font-size: 20px; 
-            opacity: 0; 
-        }
-        /* End Rose Fireworks Styling */
-
-        /* Mouse Following Duck Styling */
-        #mouseFollowDuck {
-            position: fixed;
+        /* Dancing Duck Styling */
+        #dancingDuck {
             font-size: 2.5em; /* Tamanho do pato */
-            z-index: 10001; /* Acima de tudo, exceto talvez cursores customizados */
-            pointer-events: none; /* Para não interferir com cliques */
-            display: none; /* Começa escondido */
-            transition: transform 0.05s linear; /* Movimento suave do pato */
-            will-change: transform;
+            margin-left: 10px;
+            display: inline-block; /* Para animação */
+            transition: transform 0.2s ease-in-out;
         }
-
-        .duck-shake {
-            animation: shakeDuck 0.4s cubic-bezier(.36,.07,.19,.97) both;
+        .duck-dance {
+            animation: dance 0.8s infinite;
         }
-
-        @keyframes shakeDuck { /* Animação de "bicar" ou "irritar-se" */
-            10%, 90% { transform: translate(-1px, -1px) rotate(-3deg); }
-            20%, 80% { transform: translate(2px, 1px) rotate(3deg); }
-            30%, 50%, 70% { transform: translate(-3px, 2px) rotate(-5deg); }
-            40%, 60% { transform: translate(3px, -1px) rotate(5deg); }
+        @keyframes dance {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-5px) rotate(-10deg); }
+            50% { transform: translateY(0) rotate(0deg); }
+            75% { transform: translateY(-5px) rotate(10deg); }
         }
-        /* End Mouse Following Duck Styling */
-
+        /* End Dancing Duck Styling */
 
         .now-playing-bar {
-            background-color: #e91e63;
-            color: white;
-            text-align: center;
-            padding: 10px 15px; 
-            width: 100%;
-            font-size: 0.9em;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            z-index: 10;
-            display: flex; 
-            align-items: center;
-            justify-content: center; 
-            flex-wrap: wrap; 
+            background-color: #e91e63; color: white; text-align: center; padding: 10px 15px; 
+            width: 100%; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 10; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; 
         }
-        .now-playing-bar p { margin: 0 10px 0 0; display: inline-flex; align-items: center; }
+        .now-playing-bar p { margin: 0 5px 0 0; display: inline-flex; align-items: center; }
         .now-playing-bar .music-icon { margin-right: 8px; font-size: 1.1em; }
         .now-playing-bar #songSelector {
             background-color: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.5); padding: 5px 8px;
@@ -171,7 +116,7 @@
         }
         .now-playing-bar #songSelector option { background-color: #e91e63; color: white; }
 
-        .header { background-color: #f8bbd0; color: #c2185b; padding: 20px 0; text-align: center; width: 100%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+        .header { background-color: #f8bbd0; color: #c2185b; padding: 20px 0; text-align: center; width: 100%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); position:relative; /* Para o language switcher */ }
         .header h1 { font-family: 'Parisienne', cursive; font-size: 3.5em; margin: 0; }
         .audio-player-container { position: absolute; top: -9999px; left: -9999px; width: 1px; height: 1px; overflow: hidden; opacity: 0; }
         .container { max-width: 900px; width: 90%; margin: 30px auto; padding: 20px; background-color: white; border-radius: 12px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); text-align: center; }
@@ -196,33 +141,16 @@
         .error-message { color: red; font-weight: bold; margin-top: 10px; }
 
         .letter-content { 
-            display: none; 
-            background-color: #fffdfd; 
-            padding: 30px; 
-            border-radius: 8px; 
-            border: 1px dashed #e91e63; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
-            margin-top: 20px; 
-            animation: unfoldLetter 0.8s ease-out forwards; 
-            transform-origin: top center; 
-            text-align: left; 
-            position: relative; 
+            display: none; background-color: #fffdfd; padding: 30px; border-radius: 8px; 
+            border: 1px dashed #e91e63; box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+            margin-top: 20px; animation: unfoldLetter 0.8s ease-out forwards; 
+            transform-origin: top center; text-align: left; position: relative; 
         }
         .letter-content h3 { font-family: 'Great Vibes', cursive; font-size: 3em; color: #c2185b; margin-bottom: 20px; text-align: center; border-bottom: 1px solid #f8bbd0; padding-bottom: 10px; }
         .letter-content p { font-family: 'Poppins', sans-serif; font-size: 1.2em; line-height: 1.8; color: #333; white-space: pre-line; }
         
-        /* Typewriter cursor effect */
-        .typewriter-text::after {
-            content: '|';
-            color: #c2185b; 
-            animation: blink-caret-letter 0.75s step-end infinite;
-        }
-        @keyframes blink-caret-letter { /* Renomeado para evitar conflito com outro cursor se existir */
-            from, to { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-
+        .typewriter-text::after { content: '|'; color: #c2185b; animation: blink-caret-letter 0.75s step-end infinite; }
+        @keyframes blink-caret-letter { from, to { opacity: 1; } 50% { opacity: 0; } }
         @keyframes unfoldLetter { 0% { opacity: 0; transform: scaleY(0.1) rotateX(-90deg); } 70% { opacity: 0.7; transform: scaleY(1.05) rotateX(10deg); } 100% { opacity: 1; transform: scaleY(1) rotateX(0deg); } }
 
         .footer { text-align: center; padding: 20px 0; margin-top: auto; width: 100%; background-color: #f8bbd0; color: #880e4f; font-size: 0.9em; }
@@ -230,7 +158,9 @@
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
         @media (max-width: 768px) {
-            .header h1 { font-size: 2.8em; }
+            .language-switcher { top: 5px; right: 10px; gap: 5px;}
+            .language-switcher button { padding: 4px 6px; font-size: 0.8em;}
+            .header h1 { font-size: 2.5em; } /* Reduzido para dar espaço ao seletor de idioma */
             .gallery-carousel { max-width: 95%; }
             .carousel-slide img { max-height: 300px; }
             .password-prompt h2 { font-size: 1.5em; }
@@ -243,9 +173,9 @@
             .popup-content { padding: 20px; }
         }
          @media (max-width: 480px) {
-            .header h1 { font-size: 2.2em; }
+            .header h1 { font-size: 2em; }
             .letter-content h3 { font-size: 2em; }
-            .carousel-slide img { max-height: 250px; }
+            .carousel-slide img { max-height: 220px; }
             .carousel-button { padding: 8px 12px; font-size: 1.2em;}
             .now-playing-bar { font-size: 0.75em; padding: 6px 8px; flex-direction: column;}
             .now-playing-bar p { margin-bottom: 5px; }
@@ -256,41 +186,40 @@
     </style>
 </head>
 <body>
-    <!-- Mouse Following Duck -->
-    <span id="mouseFollowDuck">🦆</span>
-    <!-- End Mouse Following Duck -->
-
     <!-- Pop-up Inicial -->
     <div id="initialPopup" class="popup-overlay">
         <div class="popup-content">
-            <h2>Atenção, Bumbum de Jujuba!</h2>
-            <svg class="hypnosis-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="45" stroke="#e91e63" stroke-width="3" fill="none" stroke-dasharray="10 5" />
-                <circle cx="50" cy="50" r="35" stroke="#c2185b" stroke-width="3" fill="none" stroke-dasharray="8 4" />
-                <circle cx="50" cy="50" r="25" stroke="#e91e63" stroke-width="3" fill="none" stroke-dasharray="6 3" />
-                <circle cx="50" cy="50" r="15" stroke="#c2185b" stroke-width="3" fill="none" stroke-dasharray="4 2" />
-                <circle cx="50" cy="50" r="5" fill="#e91e63" />
+            <h2 data-lang="popupTitle">Atenção, Bumbum de Jujuba!</h2>
+            <svg class="hypnosis-watch-svg" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+                <g class="watch-group">
+                    <line x1="50" y1="10" x2="50" y2="40" stroke="#a0522d" stroke-width="3" /> <circle cx="50" cy="10" r="3" fill="#a0522d" /> 
+                    <circle cx="50" cy="70" r="30" fill="#f0e68c" stroke="#8b4513" stroke-width="3" />
+                    <path d="M50,70 Q65,55 50,55 Q35,55 50,70 M50,55 Q60,62.5 50,62.5 Q40,62.5 50,55 M50,62.5 Q55,66.25 50,66.25 Q45,66.25 50,62.5 M50,66.25 Q52.5,68.125 50,68.125 Q47.5,68.125 50,66.25" 
+                          stroke="#8b4513" stroke-width="1.5" fill="none" /> <circle cx="50" cy="70" r="3" fill="#8b4513" /> 
+                </g>
             </svg>
-            <p style="font-size: 1.2em; color: #555; margin-bottom: 25px;">Você vai se apaixonar mais ainda pelo seu namorado, bumbum de jujuba.</p>
+            <p style="font-size: 1.2em; color: #555; margin-bottom: 25px;" data-lang="popupMessage">Você vai se apaixonar mais ainda pelo seu namorado, bumbum de jujuba.</p>
             <div class="popup-buttons">
-                <button id="popupYesButton">Sim!</button>
-                <button id="popupNoButton" class="no-button">Não...</button>
+                <button id="popupYesButton" data-lang="popupYes">Sim!</button>
+                <button id="popupNoButton" class="no-button" data-lang="popupNo">Não...</button>
             </div>
         </div>
     </div>
-    <!-- Fim Pop-up Inicial -->
 
-    <!-- Rose Fireworks Container -->
     <div id="roseFireworksContainer"></div>
-    <!-- End Rose Fireworks Container -->
 
     <div class="now-playing-bar">
-        <p><span class="music-icon">🎵</span> Tocando agora: <span id="currentSongName">Nenhuma música</span></p>
+        <p><span class="music-icon">🎵</span> <span data-lang="nowPlaying">Tocando agora</span>: <span id="currentSongName" data-lang-default="Nenhuma música">Nenhuma música</span></p>
+        <span id="dancingDuck">🦆</span> <!-- Pato Dançarino aqui -->
         <select id="songSelector"></select> 
     </div>
-
+    
     <header class="header">
-        <h1>Para Meu Amor, Bibia <span class="heart">❤</span></h1>
+        <div class="language-switcher">
+            <button id="langPtButton" class="active"><span class="flag">🇧🇷</span> PT-BR</button>
+            <button id="langEsButton"><span class="flag">🇪🇸</span> ES</button>
+        </div>
+        <h1 data-lang="mainTitle">Para Meu Amor Bibia <span class="heart">❤</span></h1>
     </header>
 
     <div class="audio-player-container">
@@ -298,45 +227,44 @@
     </div>
 
     <main class="container">
-        <!-- Gallery Section with Carousel -->
         <section class="gallery-carousel">
             <div class="carousel-slides">
                 <div class="carousel-slide">
-                    <img src="images/image1.jpg" alt="Bibia - Foto 1" 
+                    <img src="images/image1.jpg" alt="Bibia - Foto 1" data-lang-alt="altImage1"
                          onerror="this.onerror=null;this.src='https://placehold.co/600x400/f8bbd0/c2185b?text=Imagem+1+Nao+Encontrada';">
-                    <p>"Seu sorriso ilumina meus dias..."</p>
+                    <p data-lang="captionImage1">"Seu sorriso ilumina meus dias..."</p>
                 </div>
                 <div class="carousel-slide">
-                    <img src="images/image2.jpg" alt="Bibia - Foto 2"
+                    <img src="images/image2.jpg" alt="Bibia - Foto 2" data-lang-alt="altImage2"
                          onerror="this.onerror=null;this.src='https://placehold.co/600x400/f8bbd0/c2185b?text=Imagem+2+Nao+Encontrada';">
-                    <p>"...e seus olhinhos de jabuticaba me encantam!"</p>
+                    <p data-lang="captionImage2">"...e seus olhinhos de jabuticaba me encantam!"</p>
                 </div>
             </div>
             <button class="carousel-button prev" onclick="moveSlide(-1)">&#10094;</button>
             <button class="carousel-button next" onclick="moveSlide(1)">&#10095;</button>
         </section>
-        <!-- End Gallery Section -->
 
         <section class="declaration-container">
             <div id="passwordPrompt" class="password-prompt">
-                <h2>Uma pergunta especial...</h2>
-                <p>Aceita namorar comigo?</p>
-                <input type="password" id="passwordInput" placeholder="Sua resposta aqui..." class="text-center">
+                <h2 data-lang="passwordPromptTitle">Uma pergunta especial...</h2>
+                <p data-lang="passwordPromptQuestion">Aceita namorar comigo?</p>
+                <input type="password" id="passwordInput" data-lang-placeholder="passwordPlaceholder" placeholder="Sua resposta aqui..." class="text-center">
                 <br>
-                <button id="submitPasswordButton">Revelar Mensagem</button>
-                <p id="errorMessage" class="error-message" style="display: none;"></p>
+                <button id="submitPasswordButton" data-lang="passwordButton">Revelar Mensagem</button>
+                <p id="errorMessage" class="error-message" style="display: none;" data-lang-default="Ops! Resposta incorreta. Tente novamente."></p>
             </div>
             <div id="letterContent" class="letter-content"> 
-                <h3>Declaração do Último Romântico</h3>
-                <p class="min-h-[100px]" data-text-source="Querida Bibia,<br><br>Desde que você entrou na minha vida, tudo se tornou mais colorido e cheio de alegria. Seu jeito único, seus olhinhos de jabuticaba e a forma como você vê o mundo me encantam todos os dias.<br><br>Neste Dia dos Namorados, quero demonstrar o quanto você é importante para mim. Você é minha inspiração, minha cúmplice e o meu amor.<br><br>Espero que este pequeno gesto possa demonstrar um pouco do imenso carinho que sinto por você. E se a sua resposta para aquela pergunta for sim, saiba que você acabou de me fazer a pessoa mais feliz do mundo!<br><br>Com todo o meu amor,<br>Gabriel."></p>
-                <!-- O span do pato que acompanhava a escrita foi removido daqui -->
+                <h3 data-lang="letterTitle">Declaração do Último Romântico</h3>
+                <p class="min-h-[100px]" data-lang-declaration="letterContentText" 
+                   data-text-source-pt="Querida Bibia,<br><br>Desde que você entrou na minha vida, tudo se tornou mais colorido e cheio de alegria. Seu jeito único, seus olhinhos de jabuticaba e a forma como você vê o mundo me encantam todos os dias.<br><br>Neste Dia dos Namorados, quero demonstrar o quanto você é importante para mim. Você é minha inspiração, minha cúmplice e o meu amor.<br><br>Espero que este pequeno gesto possa demonstrar um pouco do imenso carinho que sinto por você. E se a sua resposta para aquela pergunta for sim, saiba que você acabou de me fazer a pessoa mais feliz do mundo!<br><br>Com todo o meu amor,<br>Gabriel."
+                   data-text-source-es="Querida Bibia,<br><br>Desde que entraste en mi vida, todo se ha vuelto más colorido y lleno de alegría. Tu forma de ser única, tus ojitos de jabuticaba y la forma en que ves el mundo me encantan todos los días.<br><br>En este Día de San Valentín, quiero demostrar cuánto significas para mí. Eres mi inspiración, mi cómplice y mi amor.<br><br>Espero que este pequeño gesto pueda demostrar un poco del inmenso cariño que siento por ti. Y si tu respuesta a esa pregunta es sí, ¡que sepas que acabas de hacerme la persona más feliz del mundo!<br><br>Con todo mi amor,<br>Gabriel."></p>
             </div>
         </section>
     </main>
 
     <footer class="footer">
-        <p>Feito com <span class="heart">❤</span> especialmente para Bibia!</p>
-        <p>&copy; 2025 - Um dia dos namorados inesquecível.</p>
+        <p data-lang="footerMadeWithLove">Feito com <span class="heart">❤</span> especialmente para Bibia!</p>
+        <p data-lang="footerCopyright">&copy; 2025 - Um dia dos namorados inesquecível.</p>
     </footer>
 
     <script>
@@ -344,8 +272,7 @@
         const popupYesButton = document.getElementById('popupYesButton');
         const popupNoButton = document.getElementById('popupNoButton');
         const roseFireworksContainer = document.getElementById('roseFireworksContainer');
-        const mouseFollowDuck = document.getElementById('mouseFollowDuck'); // Referência para o pato seguidor
-
+        const dancingDuck = document.getElementById('dancingDuck'); 
 
         const passwordInput = document.getElementById('passwordInput');
         const submitPasswordButton = document.getElementById('submitPasswordButton');
@@ -356,133 +283,83 @@
         const declarationParagraph = letterContent.querySelector('p');
         const currentSongNameDisplay = document.getElementById('currentSongName');
         const songSelector = document.getElementById('songSelector'); 
-        // const typingDuck = document.getElementById('typingDuck'); // Não é mais usado para o texto
+        const langPtButton = document.getElementById('langPtButton');
+        const langEsButton = document.getElementById('langEsButton');
 
         const correctAnswer = "oss";
         
         const originalSongList = [
-            { path: 'music/blurry.mp3', displayName: 'Blurry' },
-            { path: 'music/justlikeheaven.mp3', displayName: 'Just Like Heaven' },
-            { path: 'music/nothingcompares2u.mp3', displayName: 'Nothing Compares 2 U' }
+            { path: 'music/blurry.mp3', displayNamePt: 'Blurry', displayNameEs: 'Blurry' },
+            { path: 'music/justlikeheaven.mp3', displayNamePt: 'Just Like Heaven', displayNameEs: 'Just Like Heaven' },
+            { path: 'music/nothingcompares2u.mp3', displayNamePt: 'Nothing Compares 2 U', displayNameEs: 'Nothing Compares 2 U' }
         ];
         let shuffledPlaylist = []; 
         let currentTrackInShuffledList = 0; 
+        let currentLanguage = 'pt'; // Default language
 
+        // Language Strings
+        const langStrings = {
+            pt: {
+                pageTitle: "Feliz dias dos enamorados, Bibia ❤️",
+                popupTitle: "Atenção, Bumbum de Jujuba!",
+                popupMessage: "Você vai se apaixonar mais ainda pelo seu namorado, bumbum de jujuba.",
+                popupYes: "Sim!",
+                popupNo: "Não...",
+                nowPlaying: "Tocando agora",
+                noMusic: "Nenhuma música",
+                mainTitle: "Para Meu Amor Bibia <span class=\"heart\">❤</span>",
+                altImage1: "Bibia - Foto 1",
+                captionImage1: "\"Seu sorriso ilumina meus dias...\"",
+                altImage2: "Bibia - Foto 2",
+                captionImage2: "\"...e seus olhinhos de jabuticaba me encantam!\"",
+                passwordPromptTitle: "Uma pergunta especial...",
+                passwordPromptQuestion: "Aceita namorar comigo?",
+                passwordPlaceholder: "Sua resposta aqui...",
+                passwordButton: "Revelar Mensagem",
+                passwordError: "Ops! Resposta incorreta. Tente novamente.",
+                letterTitle: "Declaração do Último Romântico",
+                footerMadeWithLove: "Feito com <span class=\"heart\">❤</span> especialmente para Bibia!",
+                footerCopyright: "&copy; 2025 - Um dia dos namorados inesquecível."
+            },
+            es: {
+                pageTitle: "Feliz Día de San Valentín, Bibia ❤️",
+                popupTitle: "¡Atención, Bombón de Jujuba!",
+                popupMessage: "Te vas a enamorar aún más de tu novio, bombón de jujuba.",
+                popupYes: "¡Sí!",
+                popupNo: "No...",
+                nowPlaying: "Escuchando ahora",
+                noMusic: "Ninguna canción",
+                mainTitle: "Para Mi Amor Bibia <span class=\"heart\">❤</span>",
+                altImage1: "Bibia - Foto 1",
+                captionImage1: "\"Tu sonrisa ilumina mis días...\"",
+                altImage2: "Bibia - Foto 2",
+                captionImage2: "\"...¡y tus ojitos de jabuticaba me encantan!\"",
+                passwordPromptTitle: "Una pregunta especial...",
+                passwordPromptQuestion: "¿Aceptas ser mi novia?",
+                passwordPlaceholder: "Tu respuesta aquí...",
+                passwordButton: "Revelar Mensaje",
+                passwordError: "¡Uy! Respuesta incorrecta. Inténtalo de nuevo.",
+                letterTitle: "Declaración del Último Romántico",
+                footerMadeWithLove: "¡Hecho con <span class=\"heart\">❤</span> especialmente para Bibia!",
+                footerCopyright: "&copy; 2025 - Un Día de San Valentín inolvidable."
+            }
+        };
+
+        // Carousel Logic (remains the same)
         let currentSlide = 0;
         const slides = document.querySelector('.carousel-slides');
         const totalSlides = slides ? slides.children.length : 0; 
+        function showSlide(index) { if (slides) { slides.style.transform = `translateX(-${index * 100}%)`; } }
+        function moveSlide(n) { if (totalSlides > 0) { currentSlide = (currentSlide + n + totalSlides) % totalSlides; showSlide(currentSlide); } }
 
-        // Rose Fireworks Logic
-        function createRoseParticle(x, y) {
-            const particle = document.createElement('div');
-            particle.classList.add('rose-particle');
-            particle.innerHTML = '🌹'; 
-            particle.style.left = x + 'px';
-            particle.style.top = y + 'px';
-            
-            roseFireworksContainer.appendChild(particle);
-
-            const angle = Math.random() * Math.PI * 2; 
-            const speed = Math.random() * 5 + 2; 
-            const gravity = 0.1;
-            let vx = Math.cos(angle) * speed;
-            let vy = Math.sin(angle) * speed;
-            let opacity = 1;
-            let rotation = 0;
-            const rotationSpeed = (Math.random() - 0.5) * 20;
-
-            function animateParticle() {
-                vx *= 0.98; 
-                vy += gravity; 
-                particle.style.left = (parseFloat(particle.style.left) + vx) + 'px';
-                particle.style.top = (parseFloat(particle.style.top) + vy) + 'px';
-                rotation += rotationSpeed;
-                particle.style.transform = `rotate(${rotation}deg) scale(${opacity})`;
-                opacity -= 0.015; 
-
-                if (opacity > 0) {
-                    requestAnimationFrame(animateParticle);
-                } else {
-                    particle.remove();
-                }
-            }
-            requestAnimationFrame(() => {
-                particle.style.opacity = 1; 
-                requestAnimationFrame(animateParticle);
-            });
-        }
-
-        function launchRoseFirework(count = 1) {
-            for(let i = 0; i < count; i++) {
-                const startX = Math.random() * window.innerWidth;
-                const startY = window.innerHeight + 50; 
-                const numParticles = Math.floor(Math.random() * 20) + 15; 
-                const launchDuration = Math.random() * 500 + 300; 
-                setTimeout(() => {
-                    const explosionX = startX; 
-                    const explosionY = Math.random() * (window.innerHeight / 2) + (window.innerHeight / 4); 
-                    for (let j = 0; j < numParticles; j++) {
-                        createRoseParticle(explosionX, explosionY);
-                    }
-                }, launchDuration);
-            }
-        }
-        // End Rose Fireworks Logic
-
-        // Mouse Following Duck Logic
-        let duckX = 0, duckY = 0;
-        let targetDuckX = 0, targetDuckY = 0;
-        let isDuckAngry = false;
-        let duckAngerTimeout;
-
-        if (mouseFollowDuck) { // Só executa se o pato existir no HTML
-            document.addEventListener('mousemove', (e) => {
-                targetDuckX = e.clientX;
-                targetDuckY = e.clientY;
-                if (mouseFollowDuck.style.display === 'none') {
-                    mouseFollowDuck.style.display = 'block';
-                    // Posiciona o pato inicialmente no cursor para evitar salto
-                    duckX = targetDuckX;
-                    duckY = targetDuckY;
-                    mouseFollowDuck.style.transform = `translate(${duckX - mouseFollowDuck.offsetWidth / 2}px, ${duckY - mouseFollowDuck.offsetHeight / 2}px)`;
-                }
-            });
-
-            function animateMouseDuck() {
-                // Movimento suave (interpolação linear)
-                duckX += (targetDuckX - duckX) * 0.1;
-                duckY += (targetDuckY - duckY) * 0.1;
-
-                // Ajusta para que o centro do pato siga o cursor
-                const duckOffsetX = mouseFollowDuck.offsetWidth / 2;
-                const duckOffsetY = mouseFollowDuck.offsetHeight / 2;
-                mouseFollowDuck.style.transform = `translate(${duckX - duckOffsetX}px, ${duckY - duckOffsetY}px)`;
-
-                // Lógica de "bicar"
-                const distance = Math.sqrt(Math.pow(targetDuckX - duckX, 2) + Math.pow(targetDuckY - duckY, 2));
-                const angerThreshold = 150; // Distância para o pato "ficar bravo"
-
-                if (distance > angerThreshold && !isDuckAngry) {
-                    isDuckAngry = true;
-                    mouseFollowDuck.classList.add('duck-shake');
-                    clearTimeout(duckAngerTimeout); // Limpa timeout anterior se houver
-                    duckAngerTimeout = setTimeout(() => {
-                        mouseFollowDuck.classList.remove('duck-shake');
-                        isDuckAngry = false;
-                    }, 500); // Duração da animação de "raiva"
-                }
-                requestAnimationFrame(animateMouseDuck);
-            }
-            animateMouseDuck(); // Inicia a animação do pato
-        }
-        // End Mouse Following Duck Logic
-
-
+        // Rose Fireworks Logic (remains the same)
+        function createRoseParticle(x, y) { const particle = document.createElement('div'); particle.classList.add('rose-particle'); particle.innerHTML = '🌹'; particle.style.left = x + 'px'; particle.style.top = y + 'px'; roseFireworksContainer.appendChild(particle); const angle = Math.random() * Math.PI * 2; const speed = Math.random() * 5 + 2; const gravity = 0.1; let vx = Math.cos(angle) * speed; let vy = Math.sin(angle) * speed; let opacity = 1; let rotation = 0; const rotationSpeed = (Math.random() - 0.5) * 20; function animateParticle() { vx *= 0.98; vy += gravity; particle.style.left = (parseFloat(particle.style.left) + vx) + 'px'; particle.style.top = (parseFloat(particle.style.top) + vy) + 'px'; rotation += rotationSpeed; particle.style.transform = `rotate(${rotation}deg) scale(${opacity})`; opacity -= 0.015; if (opacity > 0) { requestAnimationFrame(animateParticle); } else { particle.remove(); } } requestAnimationFrame(() => { particle.style.opacity = 1; requestAnimationFrame(animateParticle); }); }
+        function launchRoseFirework(count = 1) { for(let i = 0; i < count; i++) { const startX = Math.random() * window.innerWidth; const startY = window.innerHeight + 50; const numParticles = Math.floor(Math.random() * 20) + 15; const launchDuration = Math.random() * 500 + 300; setTimeout(() => { const explosionX = startX; const explosionY = Math.random() * (window.innerHeight / 2) + (window.innerHeight / 4); for (let j = 0; j < numParticles; j++) { createRoseParticle(explosionX, explosionY); } }, launchDuration); } }
+        
         // Pop-up Logic
         popupYesButton.addEventListener('click', () => {
             initialPopup.style.display = 'none';
             launchRoseFirework(5); 
-            
             if (backgroundMusic.paused) {
                  if (shuffledPlaylist.length === 0 || currentTrackInShuffledList >= shuffledPlaylist.length) {
                     prepareShuffledPlaylist(); 
@@ -490,97 +367,47 @@
                 playNextSongInShuffle(); 
             }
         });
+        popupNoButton.addEventListener('click', () => { window.location.href = 'https://www.google.com'; });
 
-        popupNoButton.addEventListener('click', () => {
-            window.location.href = 'https://www.google.com';
-        });
-        // End Pop-up Logic
-
-
-        function showSlide(index) {
-            if (slides) { slides.style.transform = `translateX(-${index * 100}%)`; }
-        }
-        function moveSlide(n) {
-            if (totalSlides > 0) { currentSlide = (currentSlide + n + totalSlides) % totalSlides; showSlide(currentSlide); }
-        }
-
-        function shuffleArray(array) {
-            let currentIndex = array.length, randomIndex;
-            while (currentIndex !== 0) {
-                randomIndex = Math.floor(Math.random() * currentIndex);
-                currentIndex--;
-                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
-            }
-            return array;
-        }
-
-        function prepareShuffledPlaylist() {
-            shuffledPlaylist = shuffleArray([...originalSongList]); 
-            currentTrackInShuffledList = 0;
-        }
-        
+        // Music Player Logic
+        function shuffleArray(array) { let currentIndex = array.length, randomIndex; while (currentIndex !== 0) { randomIndex = Math.floor(Math.random() * currentIndex); currentIndex--; [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]]; } return array; }
+        function prepareShuffledPlaylist() { shuffledPlaylist = shuffleArray([...originalSongList]); currentTrackInShuffledList = 0; }
         function formatSongName(songObject) { 
-            if (!songObject || !songObject.displayName) return "Desconhecida";
-            return songObject.displayName;
+            if (!songObject) return langStrings[currentLanguage].noMusic;
+            return currentLanguage === 'es' ? songObject.displayNameEs : songObject.displayNamePt;
         }
-
         function loadAndPlaySong(songObject, isUserSelection = false) {
-            if (!songObject || !songObject.path) {
-                currentSongNameDisplay.textContent = "Erro ao carregar música";
-                return;
-            }
+            if (!songObject || !songObject.path) { currentSongNameDisplay.textContent = langStrings[currentLanguage].noMusic; return; }
             const songPath = songObject.path;
-            while (backgroundMusic.firstChild) {
-                backgroundMusic.removeChild(backgroundMusic.firstChild);
-            }
-            const sourceElement = document.createElement('source');
-            sourceElement.src = songPath;
-            sourceElement.type = 'audio/mpeg';
-            backgroundMusic.appendChild(sourceElement);
-            
+            while (backgroundMusic.firstChild) { backgroundMusic.removeChild(backgroundMusic.firstChild); }
+            const sourceElement = document.createElement('source'); sourceElement.src = songPath; sourceElement.type = 'audio/mpeg'; backgroundMusic.appendChild(sourceElement);
             backgroundMusic.load();
             backgroundMusic.play().then(() => {
                 currentSongNameDisplay.textContent = formatSongName(songObject);
                 if(songSelector) songSelector.value = songPath; 
+                if(dancingDuck) dancingDuck.classList.add('duck-dance');
             }).catch(error => {
                 console.log("Autoplay da música '" + songPath + "' impedido: ", error);
-                currentSongNameDisplay.textContent = "Erro: " + formatSongName(songObject);
+                currentSongNameDisplay.textContent = langStrings[currentLanguage].noMusic + " (Erro)";
+                if(dancingDuck) dancingDuck.classList.remove('duck-dance');
             });
-
             if (isUserSelection) {
                 const selectedIndexInShuffle = shuffledPlaylist.findIndex(s => s.path === songPath);
-                if (selectedIndexInShuffle !== -1) {
-                    currentTrackInShuffledList = (selectedIndexInShuffle + 1); 
-                } else { 
-                    prepareShuffledPlaylist(); 
-                    const newIdx = shuffledPlaylist.findIndex(s => s.path === songPath);
-                    if(newIdx !== -1) currentTrackInShuffledList = (newIdx + 1);
-                }
+                if (selectedIndexInShuffle !== -1) { currentTrackInShuffledList = (selectedIndexInShuffle + 1); } 
+                else { prepareShuffledPlaylist(); const newIdx = shuffledPlaylist.findIndex(s => s.path === songPath); if(newIdx !== -1) currentTrackInShuffledList = (newIdx + 1); }
             }
         }
-        
         function playNextSongInShuffle() {
-            if (originalSongList.length === 0) {
-                currentSongNameDisplay.textContent = "Nenhuma música carregada";
-                return;
-            }
-            if (currentTrackInShuffledList >= shuffledPlaylist.length || shuffledPlaylist.length === 0) { 
-                prepareShuffledPlaylist(); 
-            }
+            if (originalSongList.length === 0) { currentSongNameDisplay.textContent = langStrings[currentLanguage].noMusic; return; }
+            if (currentTrackInShuffledList >= shuffledPlaylist.length || shuffledPlaylist.length === 0) { prepareShuffledPlaylist(); }
             const songToPlay = shuffledPlaylist[currentTrackInShuffledList];
-            if(songToPlay){ 
-                 loadAndPlaySong(songToPlay);
-                 currentTrackInShuffledList++;
-            } else { 
-                prepareShuffledPlaylist();
-                if(shuffledPlaylist.length > 0) { 
-                    loadAndPlaySong(shuffledPlaylist[0]);
-                    currentTrackInShuffledList = 1;
-                }
-            }
+            if(songToPlay){ loadAndPlaySong(songToPlay); currentTrackInShuffledList++; } 
+            else { prepareShuffledPlaylist(); if(shuffledPlaylist.length > 0) { loadAndPlaySong(shuffledPlaylist[0]); currentTrackInShuffledList = 1; } }
         }
-
         backgroundMusic.addEventListener('ended', playNextSongInShuffle);
+        backgroundMusic.onpause = () => { if(dancingDuck) dancingDuck.classList.remove('duck-dance'); };
+        backgroundMusic.onplay = () => { if(dancingDuck) dancingDuck.classList.add('duck-dance'); };
+
 
         function populateSongSelector() {
             if (!songSelector) return; 
@@ -588,9 +415,20 @@
             originalSongList.forEach(songObj => {
                 const option = document.createElement('option');
                 option.value = songObj.path;
-                option.textContent = formatSongName(songObj);
+                option.textContent = formatSongName(songObj); // Usa a linguagem atual
                 songSelector.appendChild(option);
             });
+             // Atualiza o nome da música no display se uma já estiver selecionada/tocando
+            const currentSource = backgroundMusic.querySelector('source');
+            if (currentSource) {
+                const playingSongObj = originalSongList.find(s => s.path === currentSource.getAttribute('src'));
+                if (playingSongObj) {
+                    currentSongNameDisplay.textContent = formatSongName(playingSongObj);
+                    songSelector.value = playingSongObj.path;
+                }
+            } else {
+                 currentSongNameDisplay.textContent = langStrings[currentLanguage].noMusic;
+            }
         }
 
         if(songSelector){ 
@@ -603,11 +441,11 @@
             });
         }
 
+        // Typewriter (Classic)
         function typeWriter(element, text, speed, callback) {
             let i = 0;
-            element.innerHTML = ""; // Limpa o parágrafo
-            element.classList.add('typewriter-text'); // Adiciona classe para o cursor piscante
-
+            element.innerHTML = ""; 
+            element.classList.add('typewriter-text'); 
             function type() {
                 if (i < text.length) {
                     if (text.substring(i, i + 4).toLowerCase() === '<br>') {
@@ -619,12 +457,79 @@
                     }
                     setTimeout(type, speed);
                 } else {
-                    element.classList.remove('typewriter-text'); // Remove o cursor ao terminar
+                    element.classList.remove('typewriter-text'); 
                     if (callback) callback();
                 }
             }
             type();
         }
+        
+        // Language Switch Logic
+        function updateTextContent(lang) {
+            document.documentElement.lang = lang.toUpperCase(); // ex: PT-BR ou ES
+            const elements = document.querySelectorAll('[data-lang]');
+            elements.forEach(el => {
+                const key = el.dataset.lang;
+                if (langStrings[lang] && langStrings[lang][key]) {
+                    el.innerHTML = langStrings[lang][key]; // Use innerHTML para permitir tags como <span> no texto
+                }
+            });
+
+            const altElements = document.querySelectorAll('[data-lang-alt]');
+            altElements.forEach(el => {
+                const key = el.dataset.langAlt;
+                if (langStrings[lang] && langStrings[lang][key]) {
+                    el.alt = langStrings[lang][key];
+                }
+            });
+            
+            const placeholderElements = document.querySelectorAll('[data-lang-placeholder]');
+            placeholderElements.forEach(el => {
+                const key = el.dataset.langPlaceholder;
+                 if (langStrings[lang] && langStrings[lang][key]) {
+                    el.placeholder = langStrings[lang][key];
+                }
+            });
+
+            // Atualiza o texto da declaração
+            const declarationTextKey = `data-text-source-${lang}`;
+            if (declarationParagraph.hasAttribute(declarationTextKey)) {
+                 // Se o texto ainda não foi "digitado", apenas armazena para o typewriter usar.
+                 // Se já foi, e for implementada redigitação ao mudar idioma, aqui seria o local.
+                 // Por ora, o data-text-source para o typewriter será pego dinamicamente.
+            }
+            
+            // Atualiza título da janela (considerando o scroll)
+            const pageTitleKey = 'pageTitle';
+             if (langStrings[lang] && langStrings[lang][pageTitleKey]) {
+                // Para a função titleScroller, precisamos parar a antiga e iniciar uma nova
+                // Por simplicidade, aqui apenas definimos o título estático ao mudar. 
+                // A função de scroll pegará o novo título na próxima iteração se ela for reiniciada.
+                // Para uma atualização imediata do scroll, a lógica do titleScroller precisaria ser mais complexa.
+                document.title = langStrings[lang][pageTitleKey];
+            }
+            
+            // Atualiza o texto 'Nenhuma música' se necessário
+            const defaultSongDisplay = document.querySelector('[data-lang-default]');
+            if(defaultSongDisplay && backgroundMusic.paused && !backgroundMusic.currentTime) { // Se nenhuma música estiver tocando
+                currentSongNameDisplay.textContent = langStrings[lang].noMusic;
+            }
+            populateSongSelector(); // Repopula o seletor de músicas com os nomes no idioma correto
+        }
+
+        langPtButton.addEventListener('click', () => {
+            currentLanguage = 'pt';
+            updateTextContent('pt');
+            langPtButton.classList.add('active');
+            langEsButton.classList.remove('active');
+        });
+
+        langEsButton.addEventListener('click', () => {
+            currentLanguage = 'es';
+            updateTextContent('es');
+            langEsButton.classList.add('active');
+            langPtButton.classList.remove('active');
+        });
 
 
         submitPasswordButton.addEventListener('click', function() {
@@ -633,7 +538,10 @@
                 passwordPrompt.style.display = 'none';
                 letterContent.style.display = 'block';
                 errorMessage.style.display = 'none';
-                const originalText = declarationParagraph.getAttribute('data-text-source');
+                
+                const declarationTextKey = `data-text-source-${currentLanguage}`;
+                const originalText = declarationParagraph.getAttribute(declarationTextKey) || declarationParagraph.getAttribute('data-text-source-pt'); // Fallback para PT se a chave do idioma atual não existir
+
                 setTimeout(() => {
                     declarationParagraph.contentEditable = "false"; 
                     typeWriter(declarationParagraph, originalText, 50);
@@ -655,7 +563,7 @@
                     playNextSongInShuffle();
                 }
             } else {
-                errorMessage.textContent = 'Ops! Resposta incorreta. Tente novamente.';
+                errorMessage.textContent = langStrings[currentLanguage].passwordError; // Usa texto de erro traduzido
                 errorMessage.style.display = 'block';
                 passwordInput.value = '';
                 passwordInput.focus();
@@ -672,14 +580,18 @@
         // Inicializações ao carregar a página
         if (totalSlides > 0) { showSlide(currentSlide); }
         prepareShuffledPlaylist(); 
-        populateSongSelector(); 
+        updateTextContent(currentLanguage); // Define o idioma inicial e os textos
+        // A populateSongSelector() já é chamada dentro de updateTextContent()
 
-        (function titleScroller(text) {
-            document.title = text;
-            setTimeout(function () {
-                titleScroller(text.substr(1) + text.substr(0, 1));
-            }, 300); 
-        }(" Feliz dias dos enamorados, Bibia ❤️               ")); 
+        (function titleScroller() { // Modificado para pegar o título atual
+            let currentTitle = document.title;
+             // Adiciona espaços se não existirem para o efeito de scroll
+            if (currentTitle.length < 30) { // Um número arbitrário para garantir que há espaços
+                currentTitle += "                "; // Adiciona espaços
+            }
+            document.title = currentTitle.substring(1) + currentTitle.substring(0,1);
+            setTimeout(titleScroller, 300); 
+        }()); 
 
     </script>
 </body>
