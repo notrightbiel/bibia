@@ -19,6 +19,7 @@
             align-items: center;
             min-height: 100vh;
             overflow-x: hidden; /* Prevenir scroll horizontal da animação */
+            cursor: default; /* Mantém o cursor padrão, o pato é um adorno */
         }
 
         /* Pop-up Inicial Styling */
@@ -124,6 +125,29 @@
         }
         /* End Rose Fireworks Styling */
 
+        /* Mouse Following Duck Styling */
+        #mouseFollowDuck {
+            position: fixed;
+            font-size: 2.5em; /* Tamanho do pato */
+            z-index: 10001; /* Acima de tudo, exceto talvez cursores customizados */
+            pointer-events: none; /* Para não interferir com cliques */
+            display: none; /* Começa escondido */
+            transition: transform 0.05s linear; /* Movimento suave do pato */
+            will-change: transform;
+        }
+
+        .duck-shake {
+            animation: shakeDuck 0.4s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shakeDuck { /* Animação de "bicar" ou "irritar-se" */
+            10%, 90% { transform: translate(-1px, -1px) rotate(-3deg); }
+            20%, 80% { transform: translate(2px, 1px) rotate(3deg); }
+            30%, 50%, 70% { transform: translate(-3px, 2px) rotate(-5deg); }
+            40%, 60% { transform: translate(3px, -1px) rotate(5deg); }
+        }
+        /* End Mouse Following Duck Styling */
+
 
         .now-playing-bar {
             background-color: #e91e63;
@@ -182,11 +206,22 @@
             animation: unfoldLetter 0.8s ease-out forwards; 
             transform-origin: top center; 
             text-align: left; 
-            position: relative; /* Adicionado para posicionamento do pato */
+            position: relative; 
         }
         .letter-content h3 { font-family: 'Great Vibes', cursive; font-size: 3em; color: #c2185b; margin-bottom: 20px; text-align: center; border-bottom: 1px solid #f8bbd0; padding-bottom: 10px; }
         .letter-content p { font-family: 'Poppins', sans-serif; font-size: 1.2em; line-height: 1.8; color: #333; white-space: pre-line; }
-        /* O cursor CSS piscante foi removido pois o pato fará essa função visual */
+        
+        /* Typewriter cursor effect */
+        .typewriter-text::after {
+            content: '|';
+            color: #c2185b; 
+            animation: blink-caret-letter 0.75s step-end infinite;
+        }
+        @keyframes blink-caret-letter { /* Renomeado para evitar conflito com outro cursor se existir */
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
 
         @keyframes unfoldLetter { 0% { opacity: 0; transform: scaleY(0.1) rotateX(-90deg); } 70% { opacity: 0.7; transform: scaleY(1.05) rotateX(10deg); } 100% { opacity: 1; transform: scaleY(1) rotateX(0deg); } }
 
@@ -221,6 +256,10 @@
     </style>
 </head>
 <body>
+    <!-- Mouse Following Duck -->
+    <span id="mouseFollowDuck">🦆</span>
+    <!-- End Mouse Following Duck -->
+
     <!-- Pop-up Inicial -->
     <div id="initialPopup" class="popup-overlay">
         <div class="popup-content">
@@ -287,11 +326,10 @@
                 <button id="submitPasswordButton">Revelar Mensagem</button>
                 <p id="errorMessage" class="error-message" style="display: none;"></p>
             </div>
-            <div id="letterContent" class="letter-content"> <!-- Adicionado position: relative aqui no CSS -->
+            <div id="letterContent" class="letter-content"> 
                 <h3>Declaração do Último Romântico</h3>
                 <p class="min-h-[100px]" data-text-source="Querida Bibia,<br><br>Desde que você entrou na minha vida, tudo se tornou mais colorido e cheio de alegria. Seu jeito único, seus olhinhos de jabuticaba e a forma como você vê o mundo me encantam todos os dias.<br><br>Neste Dia dos Namorados, quero demonstrar o quanto você é importante para mim. Você é minha inspiração, minha cúmplice e o meu amor.<br><br>Espero que este pequeno gesto possa demonstrar um pouco do imenso carinho que sinto por você. E se a sua resposta para aquela pergunta for sim, saiba que você acabou de me fazer a pessoa mais feliz do mundo!<br><br>Com todo o meu amor,<br>Gabriel."></p>
-                <!-- Pato será adicionado aqui pelo JavaScript se necessário, ou podemos predefinir e esconder -->
-                <span id="typingDuck" style="display: none; font-size: 1.2em; margin-left: 2px; vertical-align: baseline;">🦆</span>
+                <!-- O span do pato que acompanhava a escrita foi removido daqui -->
             </div>
         </section>
     </main>
@@ -306,6 +344,7 @@
         const popupYesButton = document.getElementById('popupYesButton');
         const popupNoButton = document.getElementById('popupNoButton');
         const roseFireworksContainer = document.getElementById('roseFireworksContainer');
+        const mouseFollowDuck = document.getElementById('mouseFollowDuck'); // Referência para o pato seguidor
 
 
         const passwordInput = document.getElementById('passwordInput');
@@ -317,7 +356,7 @@
         const declarationParagraph = letterContent.querySelector('p');
         const currentSongNameDisplay = document.getElementById('currentSongName');
         const songSelector = document.getElementById('songSelector'); 
-        const typingDuck = document.getElementById('typingDuck'); // Referência para o pato
+        // const typingDuck = document.getElementById('typingDuck'); // Não é mais usado para o texto
 
         const correctAnswer = "oss";
         
@@ -390,6 +429,55 @@
         }
         // End Rose Fireworks Logic
 
+        // Mouse Following Duck Logic
+        let duckX = 0, duckY = 0;
+        let targetDuckX = 0, targetDuckY = 0;
+        let isDuckAngry = false;
+        let duckAngerTimeout;
+
+        if (mouseFollowDuck) { // Só executa se o pato existir no HTML
+            document.addEventListener('mousemove', (e) => {
+                targetDuckX = e.clientX;
+                targetDuckY = e.clientY;
+                if (mouseFollowDuck.style.display === 'none') {
+                    mouseFollowDuck.style.display = 'block';
+                    // Posiciona o pato inicialmente no cursor para evitar salto
+                    duckX = targetDuckX;
+                    duckY = targetDuckY;
+                    mouseFollowDuck.style.transform = `translate(${duckX - mouseFollowDuck.offsetWidth / 2}px, ${duckY - mouseFollowDuck.offsetHeight / 2}px)`;
+                }
+            });
+
+            function animateMouseDuck() {
+                // Movimento suave (interpolação linear)
+                duckX += (targetDuckX - duckX) * 0.1;
+                duckY += (targetDuckY - duckY) * 0.1;
+
+                // Ajusta para que o centro do pato siga o cursor
+                const duckOffsetX = mouseFollowDuck.offsetWidth / 2;
+                const duckOffsetY = mouseFollowDuck.offsetHeight / 2;
+                mouseFollowDuck.style.transform = `translate(${duckX - duckOffsetX}px, ${duckY - duckOffsetY}px)`;
+
+                // Lógica de "bicar"
+                const distance = Math.sqrt(Math.pow(targetDuckX - duckX, 2) + Math.pow(targetDuckY - duckY, 2));
+                const angerThreshold = 150; // Distância para o pato "ficar bravo"
+
+                if (distance > angerThreshold && !isDuckAngry) {
+                    isDuckAngry = true;
+                    mouseFollowDuck.classList.add('duck-shake');
+                    clearTimeout(duckAngerTimeout); // Limpa timeout anterior se houver
+                    duckAngerTimeout = setTimeout(() => {
+                        mouseFollowDuck.classList.remove('duck-shake');
+                        isDuckAngry = false;
+                    }, 500); // Duração da animação de "raiva"
+                }
+                requestAnimationFrame(animateMouseDuck);
+            }
+            animateMouseDuck(); // Inicia a animação do pato
+        }
+        // End Mouse Following Duck Logic
+
+
         // Pop-up Logic
         popupYesButton.addEventListener('click', () => {
             initialPopup.style.display = 'none';
@@ -399,7 +487,7 @@
                  if (shuffledPlaylist.length === 0 || currentTrackInShuffledList >= shuffledPlaylist.length) {
                     prepareShuffledPlaylist(); 
                 }
-                playNextSongInShuffle(); // Inicia a música aqui
+                playNextSongInShuffle(); 
             }
         });
 
@@ -517,33 +605,27 @@
 
         function typeWriter(element, text, speed, callback) {
             let i = 0;
-            let currentTextContent = ""; // Armazena o texto renderizado com HTML (ex: <br>)
             element.innerHTML = ""; // Limpa o parágrafo
-            
-            if (typingDuck) typingDuck.style.display = 'inline'; // Mostra o pato
+            element.classList.add('typewriter-text'); // Adiciona classe para o cursor piscante
 
             function type() {
                 if (i < text.length) {
-                    if (typingDuck) typingDuck.remove(); // Remove o pato da posição anterior
-
                     if (text.substring(i, i + 4).toLowerCase() === '<br>') {
-                        currentTextContent += '<br>';
+                        element.innerHTML += '<br>';
                         i += 4;
                     } else {
-                        currentTextContent += text.charAt(i);
+                        element.innerHTML += text.charAt(i);
                         i++;
                     }
-                    element.innerHTML = currentTextContent; // Atualiza o texto
-                    if (typingDuck) element.appendChild(typingDuck); // Anexa o pato no final do texto atualizado
-                    
                     setTimeout(type, speed);
                 } else {
-                    if (typingDuck) typingDuck.style.display = 'none'; // Esconde o pato ao terminar
+                    element.classList.remove('typewriter-text'); // Remove o cursor ao terminar
                     if (callback) callback();
                 }
             }
             type();
         }
+
 
         submitPasswordButton.addEventListener('click', function() {
             const enteredPassword = passwordInput.value.trim().toLowerCase();
@@ -555,16 +637,12 @@
                 setTimeout(() => {
                     declarationParagraph.contentEditable = "false"; 
                     typeWriter(declarationParagraph, originalText, 50);
-                }, 800); // Atraso para iniciar máquina de escrever após animação da carta
+                }, 800); 
 
-                // Se a música não começou no popup (ex: interação do usuário foi muito rápida ou bloqueada)
-                // e também não está tocando após o desbloqueio da senha, tenta iniciar.
                 if (backgroundMusic.paused && (shuffledPlaylist.length > 0 && currentTrackInShuffledList < shuffledPlaylist.length)) {
-                    // Tenta tocar a música atual da playlist embaralhada se não foi iniciada.
-                    // Ou, se preferir, sempre chame playNextSongInShuffle() se pausado.
                      const songToPlay = shuffledPlaylist[currentTrackInShuffledList] || shuffledPlaylist[0];
                      if(songToPlay) loadAndPlaySong(songToPlay);
-                } else if (!backgroundMusic.paused) { // Se já estiver tocando, atualiza display
+                } else if (!backgroundMusic.paused) { 
                      const currentSource = backgroundMusic.querySelector('source');
                      if(currentSource){
                         const playingSongObj = originalSongList.find(s => s.path === currentSource.getAttribute('src'));
@@ -573,7 +651,7 @@
                             if(songSelector) songSelector.value = playingSongObj.path; 
                         }
                      }
-                } else if (backgroundMusic.paused && originalSongList.length > 0) { // Caso geral se pausado
+                } else if (backgroundMusic.paused && originalSongList.length > 0) { 
                     playNextSongInShuffle();
                 }
             } else {
