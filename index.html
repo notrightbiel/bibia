@@ -6,7 +6,7 @@
     <title>Meu Amor ❤️</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Poppins:wght@300;400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Poppins:wght@300;400;700&family=Great+Vibes&display=swap');
 
         body {
             font-family: 'Poppins', sans-serif;
@@ -53,7 +53,6 @@
             border: none;
         }
         /* End Hidden YouTube Player Styling */
-
 
         .container {
             max-width: 900px;
@@ -109,27 +108,110 @@
             font-style: italic;
         }
 
-        .declaration {
+        /* Declaration / Letter Styling */
+        .declaration-container {
             margin-top: 30px;
-            padding: 20px;
-            background-color: #ffebf0; /* Very light pink for declaration */
-            border-radius: 8px;
-            border-left: 5px solid #e91e63; /* Pink accent border */
+            padding: 25px;
+            background-color: #fff9fb; /* Very light cream for the container */
+            border-radius: 12px;
+            border: 1px solid #f48fb1; /* Soft pink border */
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
         }
 
-        .declaration h2 {
-            font-family: 'Parisienne', cursive;
-            font-size: 2.5em;
-            color: #c2185b; /* Deeper pink for heading */
+        .password-prompt h2 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.8em;
+            color: #c2185b;
             margin-bottom: 15px;
         }
-
-        .declaration p {
-            font-size: 1.2em;
-            color: #444;
-            line-height: 1.7;
-            text-align: left; /* Align text to left for readability */
+        .password-prompt p {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 20px;
         }
+        .password-prompt input[type="password"] {
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 2px solid #f48fb1;
+            width: 60%;
+            max-width: 300px;
+            margin-bottom: 15px;
+            font-size: 1em;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .password-prompt input[type="password"]:focus {
+            outline: none;
+            border-color: #e91e63;
+            box-shadow: 0 0 8px rgba(233, 30, 99, 0.3);
+        }
+        .password-prompt button {
+            background-color: #e91e63;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .password-prompt button:hover {
+            background-color: #c2185b;
+            transform: translateY(-2px);
+        }
+        .error-message {
+            color: red;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .letter-content {
+            display: none; /* Hidden by default */
+            background-color: #fffdfd; /* Slightly off-white like paper */
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px dashed #e91e63; /* Dashed border for a letter feel */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-top: 20px;
+            animation: unfoldLetter 0.8s ease-out forwards;
+            transform-origin: top center;
+            text-align: left;
+        }
+
+        .letter-content h3 {
+            font-family: 'Great Vibes', cursive; /* A more script-like font for the letter title */
+            font-size: 3em;
+            color: #c2185b;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 1px solid #f8bbd0;
+            padding-bottom: 10px;
+        }
+
+        .letter-content p {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2em; /* Larger text for readability */
+            line-height: 1.8; /* More spacing for letter feel */
+            color: #333;
+            white-space: pre-line; /* Preserves line breaks from the HTML */
+        }
+
+        @keyframes unfoldLetter {
+            0% {
+                opacity: 0;
+                transform: scaleY(0.1) rotateX(-90deg);
+            }
+            70% {
+                 opacity: 0.7;
+                 transform: scaleY(1.05) rotateX(10deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scaleY(1) rotateX(0deg);
+            }
+        }
+        /* End Declaration / Letter Styling */
 
         .footer {
             text-align: center;
@@ -161,16 +243,25 @@
             .photo-card {
                 width: calc(100% - 20px); /* Full width on smaller screens */
             }
-            .declaration h2 {
-                font-size: 2em;
+            .password-prompt h2 {
+                font-size: 1.5em;
             }
-            .declaration p {
+            .password-prompt input[type="password"] {
+                width: 80%;
+            }
+            .letter-content h3 {
+                font-size: 2.5em;
+            }
+            .letter-content p {
                 font-size: 1.1em;
             }
         }
          @media (max-width: 480px) {
             .header h1 {
                 font-size: 2.2em;
+            }
+            .letter-content h3 {
+                font-size: 2em;
             }
         }
     </style>
@@ -183,19 +274,6 @@
 
     <!-- Hidden YouTube Player -->
     <div class="youtube-player-container">
-        <!--
-            INSTRUÇÕES PARA O PLAYER OCULTO:
-            1. Vá ao YouTube e encontre o vídeo que deseja.
-            2. Clique em "Compartilhar" (Share) abaixo do vídeo.
-            3. Clique em "Incorporar" (Embed).
-            4. Copie APENAS o URL que está dentro do atributo src="..." no código do iframe fornecido pelo YouTube.
-               Exemplo: https://www.youtube.com/embed/SEU_ID_DO_VIDEO
-            5. Substitua o URL abaixo (o que está em src="...") pelo URL que você copiou.
-            6. Para autoplay, adicione "?autoplay=1" ao final do URL.
-               Exemplo com autoplay: https://www.youtube.com/embed/SEU_ID_DO_VIDEO?autoplay=1
-               Nota: Autoplay com som pode ser bloqueado por navegadores até que o utilizador interaja com a página (ex: um clique).
-               Para aumentar a chance de autoplay funcionar sem interação, pode-se usar "&mute=1", mas isso silenciará o áudio.
-        -->
         <iframe
             src="https://www.youtube.com/embed/0U7XHtE5EQE?autoplay=1"
             title="YouTube video player"
@@ -204,7 +282,6 @@
         </iframe>
     </div>
     <!-- End Hidden YouTube Player -->
-
 
     <main class="container">
         <section class="gallery">
@@ -221,26 +298,79 @@
             </div>
         </section>
 
-        <section class="declaration">
-            <h2>Minha Declaração</h2>
-            <p contenteditable="true" class="border border-pink-300 p-3 rounded-md min-h-[100px] focus:outline-none focus:ring-2 focus:ring-pink-500">
-                Querida Bibia,<br><br>
-                Desde que você entrou na minha vida, tudo se tornou mais colorido e cheio de alegria. Seu jeito único, seu olhinho de jabuticaba e a forma como você vê o mundo me encantam todos os dias.
-                <br><br>
-                Neste Dia dos Namorados, quero demonstra o quanto você é importante para mim. Você é minha inspiração, minha cúmplice e o meu amor.
-                <br><br>
-                Espero que este pequeno gesto possa demonstrar um pouco do imenso carinho que sinto por você.
-                <br><br>
-                Com todo o meu amor,<br>
-                Gabriel
-            </p>
+        <!-- Declaration Section with Password Prompt -->
+        <section class="declaration-container">
+            <div id="passwordPrompt" class="password-prompt">
+                <h2>Uma pergunta especial...</h2>
+                <p>Aceita namorar comigo?</p>
+                <input type="password" id="passwordInput" placeholder="Sua resposta aqui..." class="text-center">
+                <br>
+                <button id="submitPasswordButton">Revelar Mensagem</button>
+                <p id="errorMessage" class="error-message" style="display: none;"></p>
+            </div>
+
+            <div id="letterContent" class="letter-content">
+                <h3>Minha Declaração </h3>
+                <p contenteditable="true" class="min-h-[100px]">
+Querida Bibia,
+
+Desde que você entrou na minha vida, tudo se tornou mais colorido e cheio de alegria. Seu jeito único, seus olhinhos de jabuticaba e a forma como você vê o mundo me encantam todos os dias.
+
+Neste Dia dos Namorados, quero demonstrar o quanto você é importante para mim. Você é minha inspiração, minha cúmplice e o meu amor.
+
+Espero que este pequeno gesto possa demonstrar um pouco do imenso carinho que sinto por você. E se a sua resposta para aquela pergunta for sim, saiba que você acabou de me fazer a pessoa mais feliz do mundo!
+
+Com todo o meu amor,
+Gabriel
+                </p>
+            </div>
         </section>
+        <!-- End Declaration Section -->
+
     </main>
 
     <footer class="footer">
         <p>Feito com <span class="heart">❤</span> especialmente para você!</p>
         <p>&copy; 2025 - Um dia dos namorados inesquecível.</p>
     </footer>
+
+    <script>
+        // JavaScript para a lógica da senha e revelação da carta
+        const passwordInput = document.getElementById('passwordInput');
+        const submitPasswordButton = document.getElementById('submitPasswordButton');
+        const passwordPrompt = document.getElementById('passwordPrompt');
+        const letterContent = document.getElementById('letterContent');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // A senha correta (convertida para minúsculas para comparação insensível a maiúsculas/minúsculas)
+        const correctAnswer = "oss";
+
+        submitPasswordButton.addEventListener('click', function() {
+            // Pega o valor do input e converte para minúsculas
+            const enteredPassword = passwordInput.value.trim().toLowerCase();
+
+            if (enteredPassword === correctAnswer) {
+                // Senha correta
+                passwordPrompt.style.display = 'none'; // Esconde o prompt de senha
+                letterContent.style.display = 'block'; // Mostra o conteúdo da carta (a animação CSS fará o resto)
+                errorMessage.style.display = 'none'; // Garante que a mensagem de erro está escondida
+            } else {
+                // Senha incorreta
+                errorMessage.textContent = 'Ops! Resposta incorreta. Você não se lembra o que me disse quando aceitou namorar comigo?.';
+                errorMessage.style.display = 'block';
+                passwordInput.value = ''; // Limpa o campo da senha
+                passwordInput.focus(); // Coloca o foco de volta no campo da senha
+            }
+        });
+
+        // Opcional: permitir submeter com a tecla Enter no campo da senha
+        passwordInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Impede o comportamento padrão do Enter (que poderia ser submeter um formulário)
+                submitPasswordButton.click(); // Simula um clique no botão
+            }
+        });
+    </script>
 
 </body>
 </html>
