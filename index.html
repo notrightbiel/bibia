@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Amor ❤️</title>
+    <title>Meu Amor Bibia ❤️</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Poppins:wght@300;400;700&family=Great+Vibes&display=swap');
@@ -20,39 +20,56 @@
             min-height: 100vh;
         }
 
-        .header {
-            background-color: #e91e63; /* Pink header */
+        /* Now Playing Bar Styling */
+        .now-playing-bar {
+            background-color: #e91e63; /* Cor rosa vibrante, como os detalhes */
             color: white;
+            text-align: center;
+            padding: 8px 0;
+            width: 100%;
+            font-size: 0.9em;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 10; /* Para garantir que fique acima de outros elementos se necessário */
+        }
+
+        .now-playing-bar p {
+            margin: 0;
+            display: inline-block; /* Para o ícone e texto ficarem na mesma linha */
+            vertical-align: middle;
+        }
+        .now-playing-bar .music-icon {
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+        /* End Now Playing Bar Styling */
+
+        .header {
+            background-color: #f8bbd0; /* Lighter pink header */
+            color: #c2185b; /* Darker pink text for contrast */
             padding: 20px 0;
             text-align: center;
             width: 100%;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            /* position: relative;  Se z-index for um problema, mas não deve ser */
         }
 
         .header h1 {
             font-family: 'Parisienne', cursive;
             font-size: 3.5em;
             margin: 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        /* Hidden YouTube Player Styling */
-        .youtube-player-container {
-            position: absolute; /* Position it off-screen */
+        /* Hidden Audio Player Styling */
+        .audio-player-container {
+            position: absolute;
             top: -9999px;
             left: -9999px;
-            width: 1px; /* Minimal size to ensure it loads */
+            width: 1px;
             height: 1px;
-            overflow: hidden; /* Hide any potential visual elements */
-            opacity: 0; /* Make it fully transparent */
+            overflow: hidden;
+            opacity: 0;
         }
-
-        .youtube-player-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        /* End Hidden YouTube Player Styling */
+        /* End Hidden Audio Player Styling */
 
         .container {
             max-width: 900px;
@@ -74,16 +91,17 @@
         }
 
         .photo-card {
-            background-color: #fff0f3; /* Lighter pink for cards */
-            border: 1px solid #f8bbd0; /* Soft pink border */
+            background-color: #fff0f3;
+            border: 1px solid #f8bbd0;
             border-radius: 10px;
             padding: 15px;
-            width: calc(50% - 20px); /* Two cards per row, considering gap */
+            width: calc(50% - 20px); /* Ajustado para melhor responsividade e espaço */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
+            overflow: hidden; /* Garante que a imagem não ultrapasse o card arredondado */
         }
 
         .photo-card:hover {
@@ -93,11 +111,11 @@
 
         .photo-card img {
             width: 100%;
-            max-width: 300px; /* Max image width */
-            height: auto;
-            border-radius: 8px;
+            height: 250px; /* Altura fixa para as imagens */
+            object-fit: cover; /* Cobre a área mantendo a proporção, corta se necessário */
+            border-radius: 8px; /* Mantém cantos arredondados na imagem */
             margin-bottom: 15px;
-            border: 3px solid white; /* White border around image */
+            border: 3px solid white;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
@@ -106,15 +124,15 @@
             color: #555;
             line-height: 1.6;
             font-style: italic;
+            text-align: center; /* Centraliza a legenda */
         }
 
-        /* Declaration / Letter Styling */
         .declaration-container {
             margin-top: 30px;
             padding: 25px;
-            background-color: #fff9fb; /* Very light cream for the container */
+            background-color: #fff9fb;
             border-radius: 12px;
-            border: 1px solid #f48fb1; /* Soft pink border */
+            border: 1px solid #f48fb1;
             box-shadow: 0 6px 12px rgba(0,0,0,0.1);
         }
 
@@ -167,11 +185,11 @@
         }
 
         .letter-content {
-            display: none; /* Hidden by default */
-            background-color: #fffdfd; /* Slightly off-white like paper */
+            display: none;
+            background-color: #fffdfd;
             padding: 30px;
             border-radius: 8px;
-            border: 1px dashed #e91e63; /* Dashed border for a letter feel */
+            border: 1px dashed #e91e63;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             margin-top: 20px;
             animation: unfoldLetter 0.8s ease-out forwards;
@@ -180,7 +198,7 @@
         }
 
         .letter-content h3 {
-            font-family: 'Great Vibes', cursive; /* A more script-like font for the letter title */
+            font-family: 'Great Vibes', cursive;
             font-size: 3em;
             color: #c2185b;
             margin-bottom: 20px;
@@ -191,35 +209,36 @@
 
         .letter-content p {
             font-family: 'Poppins', sans-serif;
-            font-size: 1.2em; /* Larger text for readability */
-            line-height: 1.8; /* More spacing for letter feel */
+            font-size: 1.2em;
+            line-height: 1.8;
             color: #333;
-            white-space: pre-line; /* Preserves line breaks from the HTML */
+            white-space: pre-line;
+        }
+        
+        .typewriter-text::after {
+            content: '|';
+            color: #c2185b;
+            animation: blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes blink-caret {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
         }
 
         @keyframes unfoldLetter {
-            0% {
-                opacity: 0;
-                transform: scaleY(0.1) rotateX(-90deg);
-            }
-            70% {
-                 opacity: 0.7;
-                 transform: scaleY(1.05) rotateX(10deg);
-            }
-            100% {
-                opacity: 1;
-                transform: scaleY(1) rotateX(0deg);
-            }
+            0% { opacity: 0; transform: scaleY(0.1) rotateX(-90deg); }
+            70% { opacity: 0.7; transform: scaleY(1.05) rotateX(10deg); }
+            100% { opacity: 1; transform: scaleY(1) rotateX(0deg); }
         }
-        /* End Declaration / Letter Styling */
 
         .footer {
             text-align: center;
             padding: 20px 0;
-            margin-top: auto; /* Pushes footer to bottom */
+            margin-top: auto;
             width: 100%;
-            background-color: #e91e63; /* Pink footer */
-            color: white;
+            background-color: #f8bbd0;
+            color: #880e4f;
             font-size: 0.9em;
         }
 
@@ -235,70 +254,56 @@
             100% { transform: scale(1); }
         }
 
-        /* Responsive adjustments */
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2.8em;
-            }
-            .photo-card {
-                width: calc(100% - 20px); /* Full width on smaller screens */
-            }
-            .password-prompt h2 {
-                font-size: 1.5em;
-            }
-            .password-prompt input[type="password"] {
-                width: 80%;
-            }
-            .letter-content h3 {
-                font-size: 2.5em;
-            }
-            .letter-content p {
-                font-size: 1.1em;
-            }
+            .header h1 { font-size: 2.8em; }
+            .photo-card { width: calc(100% - 20px); } 
+            .photo-card img { height: 280px; } 
+            .password-prompt h2 { font-size: 1.5em; }
+            .password-prompt input[type="password"] { width: 80%; }
+            .letter-content h3 { font-size: 2.5em; }
+            .letter-content p { font-size: 1.1em; }
+            .now-playing-bar { font-size: 0.8em; padding: 6px 0;}
         }
          @media (max-width: 480px) {
-            .header h1 {
-                font-size: 2.2em;
-            }
-            .letter-content h3 {
-                font-size: 2em;
-            }
+            .header h1 { font-size: 2.2em; }
+            .letter-content h3 { font-size: 2em; }
+            .photo-card img { height: 220px; } 
+            .now-playing-bar { font-size: 0.7em; padding: 5px 0;}
+
         }
     </style>
 </head>
 <body>
+    <!-- Now Playing Bar -->
+    <div class="now-playing-bar">
+        <p><span class="music-icon">🎵</span> Tocando agora: <span id="currentSongName">Nenhuma música</span></p>
+    </div>
+    <!-- End Now Playing Bar -->
 
     <header class="header">
-        <h1>Para Meu Amor <span class="heart">❤</span></h1>
+        <h1>Para Meu Amor Bibia <span class="heart">❤</span></h1>
     </header>
 
-    <!-- Hidden YouTube Player -->
-    <div class="youtube-player-container">
-        <iframe
-            src="https://www.youtube.com/embed/0U7XHtE5EQE?autoplay=1"
-            title="YouTube video player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen>
-        </iframe>
+    <div class="audio-player-container">
+        <audio id="backgroundMusic" loop>
+            Seu navegador não suporta o elemento de áudio.
+        </audio>
     </div>
-    <!-- End Hidden YouTube Player -->
 
     <main class="container">
         <section class="gallery">
-            <!-- Card com a primeira foto -->
             <div class="photo-card">
-                <img src="images/image1.jpg" alt="Foto da minha amada 1">
-                <p>"Seu sorriso ilumina meus dias da forma mais especial que existe..."</p>
+                <img src="images/image1.jpg" alt="Bibia - Foto 1" 
+                     onerror="this.onerror=null;this.src='https://placehold.co/300x250/f8bbd0/c2185b?text=Imagem+1';">
+                <p>"Seu sorriso ilumina meus dias..."</p>
             </div>
-
-            <!-- Card com a segunda foto -->
             <div class="photo-card">
-                <img src="images/image2.jpg" alt="Foto da minha amada 2">
-                <p>"... e cada momento ao seu lado é um presente que guardo no coração."</p>
+                <img src="images/image2.jpg" alt="Bibia - Foto 2"
+                     onerror="this.onerror=null;this.src='https://placehold.co/300x250/f8bbd0/c2185b?text=Imagem+2';">
+                <p>"...e seus olhinhos de jabuticaba me encantam!"</p>
             </div>
         </section>
 
-        <!-- Declaration Section with Password Prompt -->
         <section class="declaration-container">
             <div id="passwordPrompt" class="password-prompt">
                 <h2>Uma pergunta especial...</h2>
@@ -310,64 +315,147 @@
             </div>
 
             <div id="letterContent" class="letter-content">
-                <h3>Minha Declaração </h3>
-                <p contenteditable="true" class="min-h-[100px]">
-Querida Bibia,
-
-Desde que você entrou na minha vida, tudo se tornou mais colorido e cheio de alegria. Seu jeito único, seus olhinhos de jabuticaba e a forma como você vê o mundo me encantam todos os dias.
-
-Neste Dia dos Namorados, quero demonstrar o quanto você é importante para mim. Você é minha inspiração, minha cúmplice e o meu amor.
-
-Espero que este pequeno gesto possa demonstrar um pouco do imenso carinho que sinto por você. E se a sua resposta para aquela pergunta for sim, saiba que você acabou de me fazer a pessoa mais feliz do mundo!
-
-Com todo o meu amor,
-Gabriel
+                <h3>Declaração do Último Romântico</h3>
+                <p class="min-h-[100px]" data-text-source="Querida Bibia,<br><br>Desde que você entrou na minha vida, tudo se tornou mais colorido e cheio de alegria. Seu jeito único, seus olhinhos de jabuticaba e a forma como você vê o mundo me encantam todos os dias.<br><br>Neste Dia dos Namorados, quero demonstrar o quanto você é importante para mim. Você é minha inspiração, minha cúmplice e o meu amor.<br><br>Espero que este pequeno gesto possa demonstrar um pouco do imenso carinho que sinto por você. E se a sua resposta para aquela pergunta for OSS, saiba que você acabou de me fazer a pessoa mais feliz do mundo!<br><br>Com todo o meu amor,<br>Gabriel.">
                 </p>
             </div>
         </section>
-        <!-- End Declaration Section -->
-
     </main>
 
     <footer class="footer">
-        <p>Feito com <span class="heart">❤</span> especialmente para você!</p>
+        <p>Feito com <span class="heart">❤</span> especialmente para Bibia!</p>
         <p>&copy; 2025 - Um dia dos namorados inesquecível.</p>
     </footer>
 
     <script>
-        // JavaScript para a lógica da senha e revelação da carta
         const passwordInput = document.getElementById('passwordInput');
         const submitPasswordButton = document.getElementById('submitPasswordButton');
         const passwordPrompt = document.getElementById('passwordPrompt');
         const letterContent = document.getElementById('letterContent');
         const errorMessage = document.getElementById('errorMessage');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        const declarationParagraph = letterContent.querySelector('p');
+        const currentSongNameDisplay = document.getElementById('currentSongName'); // Elemento para mostrar o nome da música
 
-        // A senha correta (convertida para minúsculas para comparação insensível a maiúsculas/minúsculas)
         const correctAnswer = "oss";
 
+        const songList = [
+            'music/justlikeaheaven.mp3', 
+            'music/blurry.mp3',
+            'music/nothingcompares2u.mp3' 
+        ];
+        let currentSongIndex = -1; 
+
+        function formatSongName(filePath) {
+            // Remove o caminho 'music/' e a extensão '.mp3'
+            let name = filePath.replace('music/', '').replace('.mp3', '');
+            // Capitaliza a primeira letra e substitui underscores/hífens por espaços (opcional)
+            name = name.replace(/_/g, ' ').replace(/-/g, ' ');
+            name = name.charAt(0).toUpperCase() + name.slice(1);
+            return name;
+        }
+
+        function playRandomSong() {
+            if (songList.length === 0) {
+                console.log("Nenhuma música na lista para tocar.");
+                currentSongNameDisplay.textContent = "Nenhuma música carregada";
+                return;
+            }
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * songList.length);
+            } while (songList.length > 1 && randomIndex === currentSongIndex); 
+
+            currentSongIndex = randomIndex;
+            const nextSongPath = songList[currentSongIndex];
+            
+            while (backgroundMusic.firstChild) {
+                backgroundMusic.removeChild(backgroundMusic.firstChild);
+            }
+
+            const sourceElement = document.createElement('source');
+            sourceElement.src = nextSongPath;
+            sourceElement.type = 'audio/mpeg'; 
+            backgroundMusic.appendChild(sourceElement);
+            
+            backgroundMusic.load(); 
+            backgroundMusic.play().then(() => {
+                currentSongNameDisplay.textContent = formatSongName(nextSongPath); // Atualiza o nome da música
+            }).catch(error => {
+                console.log("Autoplay da música '" + nextSongPath + "' impedido: ", error);
+                currentSongNameDisplay.textContent = "Erro ao tocar: " + formatSongName(nextSongPath);
+            });
+        }
+
+        backgroundMusic.addEventListener('ended', playRandomSong);
+
+        function typeWriter(element, text, speed, callback) {
+            let i = 0;
+            element.innerHTML = "";
+            element.classList.add('typewriter-text');
+
+            function type() {
+                if (i < text.length) {
+                    if (text.substring(i, i + 4).toLowerCase() === '<br>') {
+                        element.innerHTML += '<br>';
+                        i += 4;
+                    } else {
+                        element.innerHTML += text.charAt(i);
+                        i++;
+                    }
+                    setTimeout(type, speed);
+                } else {
+                    element.classList.remove('typewriter-text');
+                    if (callback) callback();
+                }
+            }
+            type();
+        }
+
         submitPasswordButton.addEventListener('click', function() {
-            // Pega o valor do input e converte para minúsculas
             const enteredPassword = passwordInput.value.trim().toLowerCase();
 
             if (enteredPassword === correctAnswer) {
-                // Senha correta
-                passwordPrompt.style.display = 'none'; // Esconde o prompt de senha
-                letterContent.style.display = 'block'; // Mostra o conteúdo da carta (a animação CSS fará o resto)
-                errorMessage.style.display = 'none'; // Garante que a mensagem de erro está escondida
+                passwordPrompt.style.display = 'none';
+                letterContent.style.display = 'block';
+                errorMessage.style.display = 'none';
+                
+                const originalText = declarationParagraph.getAttribute('data-text-source');
+
+                setTimeout(() => {
+                    declarationParagraph.contentEditable = "false"; 
+                    typeWriter(declarationParagraph, originalText, 50);
+                }, 800);
+
+                if (backgroundMusic.paused || backgroundMusic.src === "" || !backgroundMusic.src.includes('music/')) {
+                    playRandomSong();
+                } else if (backgroundMusic.src.includes('music/') && backgroundMusic.paused){ 
+                     backgroundMusic.play().then(() => {
+                        // Se a música já estava carregada e só foi resumida, atualiza o nome
+                        const songPath = backgroundMusic.querySelector('source') ? backgroundMusic.querySelector('source').src.split('/').pop() : "Desconhecida";
+                         currentSongNameDisplay.textContent = formatSongName(songPath.startsWith('music/') ? songPath : 'music/' + songPath);
+                     }).catch(error => {
+                        console.log("Autoplay da música impedido: ", error);
+                    });
+                } else if (!backgroundMusic.paused) {
+                    // Se a música já está tocando, apenas garante que o nome está exibido
+                     const songPath = backgroundMusic.querySelector('source') ? backgroundMusic.querySelector('source').src.split('/').pop() : "Desconhecida";
+                     currentSongNameDisplay.textContent = formatSongName(songPath.startsWith('music/') ? songPath : 'music/' + songPath);
+                }
+
+
             } else {
-                // Senha incorreta
-                errorMessage.textContent = 'Ops! Resposta incorreta. Você não se lembra o que me disse quando aceitou namorar comigo?.';
+                errorMessage.textContent = 'Ops! Resposta incorreta. Tente novamente.';
                 errorMessage.style.display = 'block';
-                passwordInput.value = ''; // Limpa o campo da senha
-                passwordInput.focus(); // Coloca o foco de volta no campo da senha
+                passwordInput.value = '';
+                passwordInput.focus();
             }
         });
 
-        // Opcional: permitir submeter com a tecla Enter no campo da senha
         passwordInput.addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
-                event.preventDefault(); // Impede o comportamento padrão do Enter (que poderia ser submeter um formulário)
-                submitPasswordButton.click(); // Simula um clique no botão
+                event.preventDefault();
+                submitPasswordButton.click();
             }
         });
     </script>
