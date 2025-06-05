@@ -46,7 +46,7 @@
             width: 90%;
             border: 2px solid #e91e63; 
             animation: fadeInPopup 0.5s ease-out;
-            position: relative; /* Para z-index dos botões funcionar corretamente */
+            position: relative; 
         }
 
         @keyframes fadeInPopup {
@@ -91,7 +91,7 @@
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
             min-width: 100px; 
-            z-index: 1001; /* Para botões ficarem acima de qualquer animação interna no popup */
+            z-index: 1001; 
         }
         .popup-content .popup-buttons button:hover {
             background-color: #c2185b;
@@ -112,16 +112,15 @@
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none; /* Não interfere com cliques */
-            z-index: 999; /* Abaixo do pop-up, mas acima do resto */
+            pointer-events: none; 
+            z-index: 999; 
             overflow: hidden;
         }
 
         .rose-particle {
             position: absolute;
-            font-size: 20px; /* Tamanho da rosa */
-            /* animation: fallAndFade 1.5s ease-out forwards; */
-            opacity: 0; /* Começa invisível, JS controla */
+            font-size: 20px; 
+            opacity: 0; 
         }
         /* End Rose Fireworks Styling */
 
@@ -172,12 +171,23 @@
         .password-prompt button:hover { background-color: #c2185b; transform: translateY(-2px); }
         .error-message { color: red; font-weight: bold; margin-top: 10px; }
 
-        .letter-content { display: none; background-color: #fffdfd; padding: 30px; border-radius: 8px; border: 1px dashed #e91e63; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-top: 20px; animation: unfoldLetter 0.8s ease-out forwards; transform-origin: top center; text-align: left; }
+        .letter-content { 
+            display: none; 
+            background-color: #fffdfd; 
+            padding: 30px; 
+            border-radius: 8px; 
+            border: 1px dashed #e91e63; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+            margin-top: 20px; 
+            animation: unfoldLetter 0.8s ease-out forwards; 
+            transform-origin: top center; 
+            text-align: left; 
+            position: relative; /* Adicionado para posicionamento do pato */
+        }
         .letter-content h3 { font-family: 'Great Vibes', cursive; font-size: 3em; color: #c2185b; margin-bottom: 20px; text-align: center; border-bottom: 1px solid #f8bbd0; padding-bottom: 10px; }
         .letter-content p { font-family: 'Poppins', sans-serif; font-size: 1.2em; line-height: 1.8; color: #333; white-space: pre-line; }
-        .typewriter-text::after { content: '|'; color: #c2185b; animation: blink-caret 0.75s step-end infinite; }
+        /* O cursor CSS piscante foi removido pois o pato fará essa função visual */
 
-        @keyframes blink-caret { from, to { opacity: 1; } 50% { opacity: 0; } }
         @keyframes unfoldLetter { 0% { opacity: 0; transform: scaleY(0.1) rotateX(-90deg); } 70% { opacity: 0.7; transform: scaleY(1.05) rotateX(10deg); } 100% { opacity: 1; transform: scaleY(1) rotateX(0deg); } }
 
         .footer { text-align: center; padding: 20px 0; margin-top: auto; width: 100%; background-color: #f8bbd0; color: #880e4f; font-size: 0.9em; }
@@ -277,9 +287,11 @@
                 <button id="submitPasswordButton">Revelar Mensagem</button>
                 <p id="errorMessage" class="error-message" style="display: none;"></p>
             </div>
-            <div id="letterContent" class="letter-content">
+            <div id="letterContent" class="letter-content"> <!-- Adicionado position: relative aqui no CSS -->
                 <h3>Declaração do Último Romântico</h3>
                 <p class="min-h-[100px]" data-text-source="Querida Bibia,<br><br>Desde que você entrou na minha vida, tudo se tornou mais colorido e cheio de alegria. Seu jeito único, seus olhinhos de jabuticaba e a forma como você vê o mundo me encantam todos os dias.<br><br>Neste Dia dos Namorados, quero demonstrar o quanto você é importante para mim. Você é minha inspiração, minha cúmplice e o meu amor.<br><br>Espero que este pequeno gesto possa demonstrar um pouco do imenso carinho que sinto por você. E se a sua resposta para aquela pergunta for sim, saiba que você acabou de me fazer a pessoa mais feliz do mundo!<br><br>Com todo o meu amor,<br>Gabriel."></p>
+                <!-- Pato será adicionado aqui pelo JavaScript se necessário, ou podemos predefinir e esconder -->
+                <span id="typingDuck" style="display: none; font-size: 1.2em; margin-left: 2px; vertical-align: baseline;">🦆</span>
             </div>
         </section>
     </main>
@@ -305,6 +317,7 @@
         const declarationParagraph = letterContent.querySelector('p');
         const currentSongNameDisplay = document.getElementById('currentSongName');
         const songSelector = document.getElementById('songSelector'); 
+        const typingDuck = document.getElementById('typingDuck'); // Referência para o pato
 
         const correctAnswer = "oss";
         
@@ -324,15 +337,14 @@
         function createRoseParticle(x, y) {
             const particle = document.createElement('div');
             particle.classList.add('rose-particle');
-            particle.innerHTML = '🌹'; // Emoji da rosa
+            particle.innerHTML = '🌹'; 
             particle.style.left = x + 'px';
             particle.style.top = y + 'px';
             
             roseFireworksContainer.appendChild(particle);
 
-            // Animação da partícula
-            const angle = Math.random() * Math.PI * 2; // Ângulo aleatório
-            const speed = Math.random() * 5 + 2; // Velocidade aleatória
+            const angle = Math.random() * Math.PI * 2; 
+            const speed = Math.random() * 5 + 2; 
             const gravity = 0.1;
             let vx = Math.cos(angle) * speed;
             let vy = Math.sin(angle) * speed;
@@ -340,15 +352,14 @@
             let rotation = 0;
             const rotationSpeed = (Math.random() - 0.5) * 20;
 
-
             function animateParticle() {
-                vx *= 0.98; // Atrito do ar
-                vy += gravity; // Gravidade
+                vx *= 0.98; 
+                vy += gravity; 
                 particle.style.left = (parseFloat(particle.style.left) + vx) + 'px';
                 particle.style.top = (parseFloat(particle.style.top) + vy) + 'px';
                 rotation += rotationSpeed;
                 particle.style.transform = `rotate(${rotation}deg) scale(${opacity})`;
-                opacity -= 0.015; // Desaparecer gradualmente
+                opacity -= 0.015; 
 
                 if (opacity > 0) {
                     requestAnimationFrame(animateParticle);
@@ -356,26 +367,21 @@
                     particle.remove();
                 }
             }
-            // Força o reflow para a animação de opacidade começar
             requestAnimationFrame(() => {
-                particle.style.opacity = 1; // Torna visível para iniciar animação
+                particle.style.opacity = 1; 
                 requestAnimationFrame(animateParticle);
             });
         }
 
         function launchRoseFirework(count = 1) {
             for(let i = 0; i < count; i++) {
-                // Lança de posições aleatórias na tela
                 const startX = Math.random() * window.innerWidth;
-                const startY = window.innerHeight + 50; // Começa um pouco abaixo da tela
-                
-                const numParticles = Math.floor(Math.random() * 20) + 15; // 15-34 partículas por explosão
-                
-                // Simula um lançamento para cima antes de explodir
-                const launchDuration = Math.random() * 500 + 300; // 300-800ms para o lançamento
+                const startY = window.innerHeight + 50; 
+                const numParticles = Math.floor(Math.random() * 20) + 15; 
+                const launchDuration = Math.random() * 500 + 300; 
                 setTimeout(() => {
                     const explosionX = startX; 
-                    const explosionY = Math.random() * (window.innerHeight / 2) + (window.innerHeight / 4); // Explode na metade superior da tela
+                    const explosionY = Math.random() * (window.innerHeight / 2) + (window.innerHeight / 4); 
                     for (let j = 0; j < numParticles; j++) {
                         createRoseParticle(explosionX, explosionY);
                     }
@@ -384,18 +390,16 @@
         }
         // End Rose Fireworks Logic
 
-
         // Pop-up Logic
         popupYesButton.addEventListener('click', () => {
             initialPopup.style.display = 'none';
-            launchRoseFirework(5); // Lança 5 "fogos de artifício" de rosas
+            launchRoseFirework(5); 
             
-            // Inicia a música
             if (backgroundMusic.paused) {
                  if (shuffledPlaylist.length === 0 || currentTrackInShuffledList >= shuffledPlaylist.length) {
                     prepareShuffledPlaylist(); 
                 }
-                playNextSongInShuffle();
+                playNextSongInShuffle(); // Inicia a música aqui
             }
         });
 
@@ -434,11 +438,9 @@
 
         function loadAndPlaySong(songObject, isUserSelection = false) {
             if (!songObject || !songObject.path) {
-                console.error("Objeto de música inválido:", songObject);
                 currentSongNameDisplay.textContent = "Erro ao carregar música";
                 return;
             }
-
             const songPath = songObject.path;
             while (backgroundMusic.firstChild) {
                 backgroundMusic.removeChild(backgroundMusic.firstChild);
@@ -513,23 +515,30 @@
             });
         }
 
-
         function typeWriter(element, text, speed, callback) {
             let i = 0;
-            element.innerHTML = "";
-            element.classList.add('typewriter-text');
+            let currentTextContent = ""; // Armazena o texto renderizado com HTML (ex: <br>)
+            element.innerHTML = ""; // Limpa o parágrafo
+            
+            if (typingDuck) typingDuck.style.display = 'inline'; // Mostra o pato
+
             function type() {
                 if (i < text.length) {
+                    if (typingDuck) typingDuck.remove(); // Remove o pato da posição anterior
+
                     if (text.substring(i, i + 4).toLowerCase() === '<br>') {
-                        element.innerHTML += '<br>';
+                        currentTextContent += '<br>';
                         i += 4;
                     } else {
-                        element.innerHTML += text.charAt(i);
+                        currentTextContent += text.charAt(i);
                         i++;
                     }
+                    element.innerHTML = currentTextContent; // Atualiza o texto
+                    if (typingDuck) element.appendChild(typingDuck); // Anexa o pato no final do texto atualizado
+                    
                     setTimeout(type, speed);
                 } else {
-                    element.classList.remove('typewriter-text');
+                    if (typingDuck) typingDuck.style.display = 'none'; // Esconde o pato ao terminar
                     if (callback) callback();
                 }
             }
@@ -546,11 +555,16 @@
                 setTimeout(() => {
                     declarationParagraph.contentEditable = "false"; 
                     typeWriter(declarationParagraph, originalText, 50);
-                }, 800);
+                }, 800); // Atraso para iniciar máquina de escrever após animação da carta
 
-                 // Não inicia a música aqui, pois ela já deve ter sido iniciada pelo pop-up
-                 // Apenas garante que o display da música esteja correto se já estiver tocando.
-                if (!backgroundMusic.paused) {
+                // Se a música não começou no popup (ex: interação do usuário foi muito rápida ou bloqueada)
+                // e também não está tocando após o desbloqueio da senha, tenta iniciar.
+                if (backgroundMusic.paused && (shuffledPlaylist.length > 0 && currentTrackInShuffledList < shuffledPlaylist.length)) {
+                    // Tenta tocar a música atual da playlist embaralhada se não foi iniciada.
+                    // Ou, se preferir, sempre chame playNextSongInShuffle() se pausado.
+                     const songToPlay = shuffledPlaylist[currentTrackInShuffledList] || shuffledPlaylist[0];
+                     if(songToPlay) loadAndPlaySong(songToPlay);
+                } else if (!backgroundMusic.paused) { // Se já estiver tocando, atualiza display
                      const currentSource = backgroundMusic.querySelector('source');
                      if(currentSource){
                         const playingSongObj = originalSongList.find(s => s.path === currentSource.getAttribute('src'));
@@ -559,11 +573,9 @@
                             if(songSelector) songSelector.value = playingSongObj.path; 
                         }
                      }
-                } else if (shuffledPlaylist.length > 0) { // Se por algum motivo a música não começou no popup, tenta de novo
+                } else if (backgroundMusic.paused && originalSongList.length > 0) { // Caso geral se pausado
                     playNextSongInShuffle();
                 }
-
-
             } else {
                 errorMessage.textContent = 'Ops! Resposta incorreta. Tente novamente.';
                 errorMessage.style.display = 'block';
