@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Amor Bibia ❤️</title>
+    <title>Feliz dias dos enamorados, Bibia</title> <!-- MODIFICADO AQUI -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Poppins:wght@300;400;700&family=Great+Vibes&display=swap');
@@ -234,7 +234,6 @@
         const currentSongNameDisplay = document.getElementById('currentSongName');
 
         const correctAnswer = "oss";
-        // Lista de músicas atualizada
         const songList = [
             'music/blurry.mp3', 
             'music/justlikeheaven.mp3',
@@ -248,19 +247,22 @@
         const totalSlides = document.querySelectorAll('.carousel-slide').length;
 
         function showSlide(index) {
-            slides.style.transform = `translateX(-${index * 100}%)`;
+            if (slides) { // Adiciona verificação se 'slides' existe
+                 slides.style.transform = `translateX(-${index * 100}%)`;
+            }
         }
 
         function moveSlide(n) {
-            currentSlide = (currentSlide + n + totalSlides) % totalSlides;
-            showSlide(currentSlide);
+            if (totalSlides > 0) { // Só move se houver slides
+                currentSlide = (currentSlide + n + totalSlides) % totalSlides;
+                showSlide(currentSlide);
+            }
         }
         // End Carousel Logic
 
         function formatSongName(filePath) {
             let name = filePath.replace('music/', '').replace('.mp3', '');
-            name = name.replace(/_/g, ' ').replace(/-/g, ' '); // Substitui underscores e hífens
-            // Capitaliza a primeira letra de cada palavra para um visual melhor
+            name = name.replace(/_/g, ' ').replace(/-/g, ' '); 
             name = name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
             return name;
         }
@@ -333,12 +335,12 @@
                     playRandomSong();
                 } else if (backgroundMusic.src.includes('music/') && backgroundMusic.paused){ 
                      backgroundMusic.play().then(() => {
-                        const songPath = backgroundMusic.querySelector('source') ? backgroundMusic.querySelector('source').src : "music/Desconhecida.mp3"; // Adiciona fallback
-                        currentSongNameDisplay.textContent = formatSongName(songPath.substring(songPath.lastIndexOf('/') + 1)); // Pega apenas o nome do arquivo
+                        const songPath = backgroundMusic.querySelector('source') ? backgroundMusic.querySelector('source').src : "music/Desconhecida.mp3"; 
+                        currentSongNameDisplay.textContent = formatSongName(songPath.substring(songPath.lastIndexOf('/') + 1)); 
                      }).catch(error => { console.log("Autoplay da música impedido: ", error); });
                 } else if (!backgroundMusic.paused) {
-                     const songPath = backgroundMusic.querySelector('source') ? backgroundMusic.querySelector('source').src : "music/Desconhecida.mp3"; // Adiciona fallback
-                     currentSongNameDisplay.textContent = formatSongName(songPath.substring(songPath.lastIndexOf('/') + 1)); // Pega apenas o nome do arquivo
+                     const songPath = backgroundMusic.querySelector('source') ? backgroundMusic.querySelector('source').src : "music/Desconhecida.mp3"; 
+                     currentSongNameDisplay.textContent = formatSongName(songPath.substring(songPath.lastIndexOf('/') + 1));
                 }
             } else {
                 errorMessage.textContent = 'Ops! Resposta incorreta. Tente novamente.';
@@ -356,7 +358,18 @@
         });
 
         // Initialize carousel on page load
-        showSlide(currentSlide);
+        if (totalSlides > 0) { // Só inicializa se houver slides
+            showSlide(currentSlide);
+        }
+
+        // Efeito de título da janela se movendo
+        (function titleScroller(text) {
+            document.title = text;
+            setTimeout(function () {
+                titleScroller(text.substr(1) + text.substr(0, 1));
+            }, 300); // Velocidade do scroll (300ms)
+        }(" Feliz dias dos enamorados, Bibia ❤️               ")); // Adicionei espaços para um scroll mais suave
+
     </script>
 </body>
 </html>
