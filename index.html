@@ -88,7 +88,7 @@
                 <h3 data-lang="letterTitle">Declaração do Último Romântico</h3>
                 <p class="min-h-[100px]" data-lang-declaration="letterContentText" 
                    data-text-source-pt="Querida Bibia,<br><br>Desde que você entrou na minha vida, tudo se tornou mais colorido e cheio de alegria. Seu jeito único, seus olhinhos de jabuticaba e a forma como você vê o mundo me encantam todos os dias.<br><br>Neste Dia dos Namorados, quero demonstrar o quanto você é importante para mim. Você é minha inspiração, minha cúmplice e o meu amor.<br><br>Espero que este pequeno gesto possa demonstrar um pouco do imenso carinho que sinto por você. E se a sua resposta para aquela pergunta for sim, saiba que você acabou de me fazer a pessoa mais feliz do mundo!"
-                   data-text-source-es="Querida Bibia,<br><br>Desde que entraste en mi vida, todo se ha vuelto más colorido y lleno de alegría. Tu forma de ser única, tus ojitos de jabuticaba y la forma en que ves el mundo me encantan todos los días.<br><br>En este Día de San Valentín, quiero demostrar cuánto significas para mí. Eres mi inspiración, mi cómplice y mi amor.<br><br>Espero que este pequeno gesto pueda demostrar un poco del inmenso cariño que siento por ti. Y si tu respuesta a esa pregunta es sí, ¡que sepas que acabas de hacerme la persona más feliz del mundo!"></p>
+                   data-text-source-es="Querida Bibia,<br><br>Desde que entraste en mi vida, todo se ha vuelto más colorido y lleno de alegría. Tu forma de ser única, tus ojitos de jabuticaba y la forma en que ves el mundo me encantan todos los días.<br><br>En este Día de San Valentín, quiero demostrar cuánto significas para mí. Eres mi inspiración, mi cómplice y mi amor.<br><br>Espero que este pequeno gesto possa demostrar un poco del inmenso cariño que siento por ti. Y si tu respuesta a esa pregunta es sí, ¡que sepas que acabas de hacerme la persona más feliz del mundo!"></p>
                 <!-- O tempo de namoro, dias dos namorados e assinatura serão adicionados aqui pelo JavaScript -->
             </div>
         </section>
@@ -121,11 +121,20 @@
         const valentinesDayMonth = 5; 
         const valentinesDayDate = 12;
 
-        const originalSongList = [
-            { path: 'music/blurry.mp3', displayNamePt: 'Blurry', displayNameEs: 'Blurry' },
-            { path: 'music/justlikeheaven.mp3', displayNamePt: 'Just Like Heaven', displayNameEs: 'Just Like Heaven' },
-            { path: 'music/nothingcompares2u.mp3', displayNamePt: 'Nothing Compares 2 U', displayNameEs: 'Nothing Compares 2 U' }
+        // ===================================================================
+        // OTIMIZAÇÃO: Gerencie sua playlist aqui!
+        // Basta adicionar o caminho de qualquer arquivo .mp3 da sua pasta /music.
+        // O resto do site (player, seletor de músicas) será atualizado automaticamente.
+        // ===================================================================
+        const songFiles = [
+            'music/blurry.mp3', 
+            'music/justlikeheaven.mp3',
+            'music/nothingcompares2u.mp3'
+            // Exemplo: 'music/nova_musica_linda.mp3',
         ];
+        // ===================================================================
+
+
         let shuffledPlaylist = []; 
         let currentTrackInShuffledList = 0; 
         let currentLanguage = 'pt'; 
@@ -156,8 +165,8 @@
                 letterTitle: "Declaração do Último Romântico",
                 relationshipDurationPrefix: "Nosso tempo juntos: ",
                 relationshipDurationSuffixPt: "(desde 26/11/2022).",
-                valentinesPassedText: "Dias dos Namorados que já passamos juntos: ", // Novo
-                valentinesCountdownText: "Faltam para o nosso próximo Dia dos Namorados: ", // Novo
+                valentinesPassedText: "Dias dos Namorados que já passamos juntos: ",
+                valentinesCountdownText: "Faltam para o nosso próximo Dia dos Namorados: ",
                 signature: "<br><br>Com todo o meu amor,<br>Gabriel.",
                 yearsText: "anos",
                 monthsText: "meses",
@@ -179,7 +188,7 @@
                 altImage1: "Bibia - Foto 1",
                 captionImage1: "\"Tu sonrisa ilumina mis días...\"",
                 altImage2: "Bibia - Foto 2",
-                captionImage2: "\"...¡y tus ojitos de jabuticaba me encantan!\"",
+                captionImage2: "\"...¡y tus ojitos de jabuticaba me encantam!\"",
                 passwordPromptTitle: "Una pregunta especial...",
                 passwordPromptQuestion: "¿Aceptas ser mi novia?",
                 passwordPlaceholder: "Tu respuesta aquí...",
@@ -188,8 +197,8 @@
                 letterTitle: "Declaración del Último Romántico",
                 relationshipDurationPrefix: "Nuestro tiempo juntos: ",
                 relationshipDurationSuffixEs: "(desde el 26/11/2022).",
-                valentinesPassedText: "Días de San Valentín que ya pasamos juntos: ", // Novo
-                valentinesCountdownText: "Faltan para nuestro próximo Día de San Valentín: ", // Novo
+                valentinesPassedText: "Días de San Valentín que ya pasamos juntos: ",
+                valentinesCountdownText: "Faltan para nuestro próximo Día de San Valentín: ",
                 signature: "<br><br>Con todo mi amor,<br>Gabriel.",
                 yearsText: "años",
                 monthsText: "meses",
@@ -217,19 +226,27 @@
         });
         popupNoButton.addEventListener('click', () => { window.location.href = 'https://www.google.com'; });
         function shuffleArray(array) { let currentIndex = array.length, randomIndex; while (currentIndex !== 0) { randomIndex = Math.floor(Math.random() * currentIndex); currentIndex--; [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]]; } return array; }
-        function prepareShuffledPlaylist() { shuffledPlaylist = shuffleArray([...originalSongList]); currentTrackInShuffledList = 0; }
-        function formatSongName(songObject) { 
-            if (!songObject) return langStrings[currentLanguage].noMusic;
-            return currentLanguage === 'es' ? songObject.displayNameEs : songObject.displayNamePt;
+        function prepareShuffledPlaylist() { shuffledPlaylist = shuffleArray([...songFiles]); currentTrackInShuffledList = 0; }
+        
+        // Função otimizada para formatar o nome do arquivo
+        function formatSongName(songPath) {
+            if (!songPath) return langStrings[currentLanguage].noMusic;
+            // Extrai o nome do arquivo, remove a pasta e a extensão
+            let name = songPath.substring(songPath.lastIndexOf('/') + 1).replace('.mp3', '');
+            // Substitui underscores e hífens por espaços
+            name = name.replace(/_/g, ' ').replace(/-/g, ' ');
+            // Capitaliza a primeira letra de cada palavra
+            return name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
         }
-        function loadAndPlaySong(songObject, isUserSelection = false) {
-            if (!songObject || !songObject.path) { currentSongNameDisplay.textContent = langStrings[currentLanguage].noMusic; return; }
-            const songPath = songObject.path;
+
+        function loadAndPlaySong(songPath, isUserSelection = false) {
+            if (!songPath) { currentSongNameDisplay.textContent = langStrings[currentLanguage].noMusic; return; }
+            
             while (backgroundMusic.firstChild) { backgroundMusic.removeChild(backgroundMusic.firstChild); }
             const sourceElement = document.createElement('source'); sourceElement.src = songPath; sourceElement.type = 'audio/mpeg'; backgroundMusic.appendChild(sourceElement);
             backgroundMusic.load();
             backgroundMusic.play().then(() => {
-                currentSongNameDisplay.textContent = formatSongName(songObject);
+                currentSongNameDisplay.textContent = formatSongName(songPath);
                 if(songSelector) songSelector.value = songPath; 
                 if(dancingDuck) dancingDuck.classList.add('duck-dance');
             }).catch(error => {
@@ -238,13 +255,13 @@
                 if(dancingDuck) dancingDuck.classList.remove('duck-dance');
             });
             if (isUserSelection) {
-                const selectedIndexInShuffle = shuffledPlaylist.findIndex(s => s.path === songPath);
+                const selectedIndexInShuffle = shuffledPlaylist.indexOf(songPath);
                 if (selectedIndexInShuffle !== -1) { currentTrackInShuffledList = (selectedIndexInShuffle + 1); } 
-                else { prepareShuffledPlaylist(); const newIdx = shuffledPlaylist.findIndex(s => s.path === songPath); if(newIdx !== -1) currentTrackInShuffledList = (newIdx + 1); }
+                else { prepareShuffledPlaylist(); const newIdx = shuffledPlaylist.indexOf(songPath); if(newIdx !== -1) currentTrackInShuffledList = (newIdx + 1); }
             }
         }
         function playNextSongInShuffle() {
-            if (originalSongList.length === 0) { currentSongNameDisplay.textContent = langStrings[currentLanguage].noMusic; return; }
+            if (songFiles.length === 0) { currentSongNameDisplay.textContent = langStrings[currentLanguage].noMusic; return; }
             if (currentTrackInShuffledList >= shuffledPlaylist.length || shuffledPlaylist.length === 0) { prepareShuffledPlaylist(); }
             const songToPlay = shuffledPlaylist[currentTrackInShuffledList];
             if(songToPlay){ loadAndPlaySong(songToPlay); currentTrackInShuffledList++; } 
@@ -253,32 +270,30 @@
         backgroundMusic.addEventListener('ended', playNextSongInShuffle);
         backgroundMusic.onpause = () => { if(dancingDuck) dancingDuck.classList.remove('duck-dance'); };
         backgroundMusic.onplay = () => { if(dancingDuck) dancingDuck.classList.add('duck-dance'); };
+
         function populateSongSelector() { 
             if (!songSelector) return; 
             songSelector.innerHTML = ''; 
-            originalSongList.forEach(songObj => {
+            songFiles.forEach(songPath => {
                 const option = document.createElement('option');
-                option.value = songObj.path;
-                option.textContent = formatSongName(songObj); 
+                option.value = songPath;
+                option.textContent = formatSongName(songPath); 
                 songSelector.appendChild(option);
             });
             const currentSource = backgroundMusic.querySelector('source');
             if (currentSource) {
-                const playingSongObj = originalSongList.find(s => s.path === currentSource.getAttribute('src'));
-                if (playingSongObj) {
-                    currentSongNameDisplay.textContent = formatSongName(playingSongObj);
-                    songSelector.value = playingSongObj.path;
-                }
+                currentSongNameDisplay.textContent = formatSongName(currentSource.src);
+                songSelector.value = currentSource.src;
             } else {
                  currentSongNameDisplay.textContent = langStrings[currentLanguage].noMusic;
             }
         }
+
         if(songSelector){ 
             songSelector.addEventListener('change', function() {
                 const selectedPath = this.value;
-                const selectedSongObject = originalSongList.find(song => song.path === selectedPath);
-                if (selectedSongObject) {
-                    loadAndPlaySong(selectedSongObject, true);
+                if (selectedPath) {
+                    loadAndPlaySong(selectedPath, true);
                 }
             });
         }
@@ -304,7 +319,6 @@
             type();
         }
         
-        // --- Funções de Cálculo de Datas ---
         function calculateRelationshipDuration(startDate) {
             const today = new Date();
             let years = today.getFullYear() - startDate.getFullYear();
@@ -325,17 +339,7 @@
             }
             return count;
         }
-        function calculateCountdownToNextValentines() {
-            const today = new Date();
-            let nextValentinesYear = today.getFullYear();
-            let nextValentinesDate = new Date(nextValentinesYear, valentinesDayMonth, valentinesDayDate);
-            if (today > nextValentinesDate) {
-                nextValentinesYear++;
-                nextValentinesDate = new Date(nextValentinesYear, valentinesDayMonth, valentinesDayDate);
-            }
-            return calculateRelationshipDuration(today, nextValentinesDate); // Reutiliza a lógica de cálculo de duração
-        }
-        function calculateDuration(d1, d2) { // Função genérica de cálculo de duração
+        function calculateDuration(d1, d2) { 
             let years = d2.getFullYear() - d1.getFullYear();
             let months = d2.getMonth() - d1.getMonth();
             let days = d2.getDate() - d1.getDate();
@@ -343,12 +347,9 @@
             if (months < 0) { years--; months += 12; }
             return { years, months, days };
         }
-
-        // --- Função para Exibir Informações ---
         function displayRelationshipInfo() {
             const duration = calculateRelationshipDuration(relationshipStartDate);
             const valentinesPassed = calculateValentinesPassed(relationshipStartDate);
-            
             const today = new Date();
             let nextValentinesYear = today.getFullYear();
             if (today.getMonth() > valentinesDayMonth || (today.getMonth() === valentinesDayMonth && today.getDate() > valentinesDayDate)) {
@@ -356,27 +357,21 @@
             }
             const nextValentines = new Date(nextValentinesYear, valentinesDayMonth, valentinesDayDate);
             const countdown = calculateDuration(today, nextValentines);
-            
             const lang = currentLanguage;
             
-            // Formata a string de duração
             let durationParts = [];
             if (duration.years > 0) durationParts.push(`${duration.years} ${langStrings[lang].yearsText}`);
             if (duration.months > 0) durationParts.push(`${duration.months} ${langStrings[lang].monthsText}`);
             if (duration.days > 0) durationParts.push(`${duration.days} ${langStrings[lang].daysText}`);
             let durationString = durationParts.length > 1 ? durationParts.slice(0, -1).join(', ') + ` ${langStrings[lang].andText} ` + durationParts.slice(-1) : durationParts[0] || "Hoje!";
 
-            // Formata a string de contagem regressiva
             let countdownParts = [];
             if (countdown.years > 0) countdownParts.push(`${countdown.years} ${langStrings[lang].yearsText}`);
             if (countdown.months > 0) countdownParts.push(`${countdown.months} ${langStrings[lang].monthsText}`);
             if (countdown.days > 0) countdownParts.push(`${countdown.days} ${langStrings[lang].daysText}`);
             let countdownString = countdownParts.length > 1 ? countdownParts.slice(0, -1).join(', ') + ` ${langStrings[lang].andText} ` + countdownParts.slice(-1) : countdownParts[0] || "É hoje!";
 
-
-            // Remove e adiciona os elementos
             letterContent.querySelectorAll(".dynamic-info").forEach(el => el.remove());
-
             const infoContainer = document.createElement('div');
             infoContainer.className = "dynamic-info";
             infoContainer.style.marginTop = "20px";
@@ -391,7 +386,6 @@
             letterContent.appendChild(infoContainer);
         }
 
-        // --- Lógica da Troca de Idioma ---
         function updateTextContent(lang) {
             document.documentElement.lang = lang.toUpperCase(); 
             localStorage.setItem('minisiteLanguage', lang); 
@@ -424,7 +418,6 @@
                 typeWriter(declarationParagraph, newDeclarationText, 0, () => { displayRelationshipInfo(); });
             }
         }
-
         function populateLanguageSelector() {
             if (!languageSelectorDropdown) return;
             languageSelectorDropdown.innerHTML = ''; 
@@ -432,7 +425,6 @@
             const esOption = document.createElement('option'); esOption.value = 'es'; esOption.textContent = '🇪🇸'; languageSelectorDropdown.appendChild(esOption);
             languageSelectorDropdown.value = currentLanguage; 
         }
-
         if (languageSelectorDropdown) {
             languageSelectorDropdown.addEventListener('change', function() {
                 currentLanguage = this.value;
@@ -441,8 +433,6 @@
                 startTitleScroller(langStrings[currentLanguage].pageTitle + "                "); 
             });
         }
-
-        // --- Lógica de Submissão da Senha ---
         submitPasswordButton.addEventListener('click', function() {
             const enteredPassword = passwordInput.value.trim().toLowerCase();
             if (enteredPassword === correctAnswer) {
@@ -461,11 +451,11 @@
                      if(currentSource){
                         const playingSongObj = originalSongList.find(s => s.path === currentSource.getAttribute('src'));
                         if(playingSongObj) {
-                            currentSongNameDisplay.textContent = formatSongName(playingSongObj);
+                            currentSongNameDisplay.textContent = formatSongName(playingSongObj.path);
                             if(songSelector) songSelector.value = playingSongObj.path; 
                         }
                      }
-                } else if (backgroundMusic.paused && originalSongList.length > 0) { 
+                } else if (backgroundMusic.paused && songFiles.length > 0) { 
                     playNextSongInShuffle();
                 }
             } else {
@@ -475,15 +465,12 @@
                 passwordInput.focus();
             }
         });
-
         passwordInput.addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
                 event.preventDefault();
                 submitPasswordButton.click();
             }
         });
-
-        // --- Efeito de scroll do título da janela ---
         function startTitleScroller(text) {
             clearTimeout(titleScrollerInterval); 
             let currentDisplayTitle = text;
@@ -494,8 +481,6 @@
             }
             scroll();
         }
-
-        // --- Inicializações da Página ---
         if (totalSlides > 0) { showSlide(currentSlide); } 
         prepareShuffledPlaylist(); 
         populateLanguageSelector(); 
