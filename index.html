@@ -96,7 +96,7 @@
 
     <footer class="footer">
         <p data-lang="footerMadeWithLove">Feito com <span class="heart">❤</span> especialmente para Bibia!</p>
-        <p><a href="pagina2.html" class="back-link" style="margin-top:10px; display:inline-block;" data-lang="viewFutureGallery">Nossa galeria de fotos</a></p> 
+        <p><a href="pagina2.html" class="back-link" style="margin-top:10px; display:inline-block;" data-lang="viewFutureGallery">Nossa Galeria de fotos</a></p> 
         <p data-lang="footerCopyright" style="margin-top:10px;">&copy; 2025 - Um dia dos namorados inesquecível.</p>
     </footer>
 
@@ -152,7 +152,7 @@
                 passwordPromptQuestion: "Aceita namorar comigo?",
                 passwordPlaceholder: "Sua resposta aqui...",
                 passwordButton: "Revelar Mensagem",
-                passwordError: "Ops! Resposta incorreta. Tente novamente.",
+                passwordError: "Ops! Resposta incorreta. Você se recorda a palavra que disse ao namorar comigo?", // MODIFICADO AQUI
                 letterTitle: "Declaração do Último Romântico",
                 relationshipDurationPrefix: "Nosso tempo juntos: ",
                 relationshipDurationSuffixPt: "(desde 26/11/2022).",
@@ -162,7 +162,7 @@
                 monthsText: "meses",
                 daysText: "dias",
                 andText: "e",
-                viewFutureGallery: "Nossa Galeria de fotos", // MODIFICADO AQUI
+                viewFutureGallery: "Nossa Galeria de fotos",
                 footerMadeWithLove: "Feito com <span class=\"heart\">❤</span> especialmente para Bibia!",
                 footerCopyright: "&copy; 2025 - Um dia dos namorados inesquecível."
             },
@@ -183,7 +183,7 @@
                 passwordPromptQuestion: "¿Aceptas ser mi novia?",
                 passwordPlaceholder: "Tu respuesta aquí...",
                 passwordButton: "Revelar Mensaje",
-                passwordError: "¡Uy! Respuesta incorrecta. Inténtalo de nuevo.",
+                passwordError: "¡Uy! Respuesta incorrecta. ¿Recuerdas la palabra que dijiste al aceptar ser mi novia?", // MODIFICADO AQUI
                 letterTitle: "Declaración del Último Romántico",
                 relationshipDurationPrefix: "Nuestro tiempo juntos: ",
                 relationshipDurationSuffixEs: "(desde el 26/11/2022).",
@@ -193,7 +193,7 @@
                 monthsText: "meses",
                 daysText: "días",
                 andText: "y",
-                viewFutureGallery: "Nuestra Galería de fotos", // MODIFICADO AQUI
+                viewFutureGallery: "Nuestra Galería de fotos",
                 footerMadeWithLove: "¡Hecho con <span class=\"heart\">❤</span> especialmente para Bibia!",
                 footerCopyright: "&copy; 2025 - Un Día de San Valentín inolvidable."
             }
@@ -343,7 +343,7 @@
         }
         function updateTextContent(lang) {
             document.documentElement.lang = lang.toUpperCase(); 
-            localStorage.setItem('minisiteLanguage', lang); // Salva o idioma para a página da galeria
+            localStorage.setItem('minisiteLanguage', lang); 
             const elements = document.querySelectorAll('[data-lang]');
             elements.forEach(el => {
                 const key = el.dataset.lang;
