@@ -82,7 +82,7 @@
                 <input type="password" id="passwordInput" data-lang-placeholder="passwordPlaceholder" placeholder="Sua resposta aqui..." class="text-center">
                 <br>
                 <button id="submitPasswordButton" data-lang="passwordButton">Revelar Mensagem</button>
-                <p id="errorMessage" class="error-message" style="display: none;" data-lang-default="Ops! Resposta incorreta. Tente novamente."></p>
+                <p id="errorMessage" class="error-message" style="display: none;" data-lang-default="Ops! Resposta incorreta. Você se recorda a palavra que disse ao namorar comigo?"></p>
             </div>
             <div id="letterContent" class="letter-content"> 
                 <h3 data-lang="letterTitle">Declaração do Último Romântico</h3>
@@ -152,11 +152,12 @@
                 passwordPromptQuestion: "Aceita namorar comigo?",
                 passwordPlaceholder: "Sua resposta aqui...",
                 passwordButton: "Revelar Mensagem",
-                passwordError: "Ops! Resposta incorreta. Você se recorda a palavra que disse ao namorar comigo?", // MODIFICADO AQUI
+                passwordError: "Ops! Resposta incorreta. Você se recorda a palavra que disse ao namorar comigo?",
                 letterTitle: "Declaração do Último Romântico",
                 relationshipDurationPrefix: "Nosso tempo juntos: ",
                 relationshipDurationSuffixPt: "(desde 26/11/2022).",
-                valentinesCountText: "Dias dos Namorados juntos: ",
+                valentinesPassedText: "Dias dos Namorados que já passamos juntos: ", // Novo
+                valentinesCountdownText: "Faltam para o nosso próximo Dia dos Namorados: ", // Novo
                 signature: "<br><br>Com todo o meu amor,<br>Gabriel.",
                 yearsText: "anos",
                 monthsText: "meses",
@@ -183,11 +184,12 @@
                 passwordPromptQuestion: "¿Aceptas ser mi novia?",
                 passwordPlaceholder: "Tu respuesta aquí...",
                 passwordButton: "Revelar Mensaje",
-                passwordError: "¡Uy! Respuesta incorrecta. ¿Recuerdas la palabra que dijiste al aceptar ser mi novia?", // MODIFICADO AQUI
+                passwordError: "¡Uy! Respuesta incorrecta. ¿Recuerdas la palabra que dijiste al aceptar ser mi novia?",
                 letterTitle: "Declaración del Último Romántico",
                 relationshipDurationPrefix: "Nuestro tiempo juntos: ",
                 relationshipDurationSuffixEs: "(desde el 26/11/2022).",
-                valentinesCountText: "Días de San Valentín juntos: ",
+                valentinesPassedText: "Días de San Valentín que ya pasamos juntos: ", // Novo
+                valentinesCountdownText: "Faltan para nuestro próximo Día de San Valentín: ", // Novo
                 signature: "<br><br>Con todo mi amor,<br>Gabriel.",
                 yearsText: "años",
                 monthsText: "meses",
@@ -301,8 +303,10 @@
             }
             type();
         }
+        
+        // --- Funções de Cálculo de Datas ---
         function calculateRelationshipDuration(startDate) {
-            const today = new Date(2025, 5, 5); 
+            const today = new Date();
             let years = today.getFullYear() - startDate.getFullYear();
             let months = today.getMonth() - startDate.getMonth();
             let days = today.getDate() - startDate.getDate();
@@ -310,37 +314,84 @@
             if (months < 0) { years--; months += 12; }
             return { years, months, days };
         }
-        function calculateValentinesDays(startDate) {
-            const today = new Date(2025, 5, 5); 
+        function calculateValentinesPassed(startDate) {
+            const today = new Date();
             let count = 0; const startYear = startDate.getFullYear(); const currentYear = today.getFullYear();
             for (let year = startYear; year <= currentYear; year++) {
                 const valentinesThisYear = new Date(year, valentinesDayMonth, valentinesDayDate);
                 if (year === startYear) { 
-                    if (startDate < valentinesThisYear && today >= valentinesThisYear) { count++; } 
-                    else if (startDate < valentinesThisYear && year < currentYear) { count++; }
-                } else if (year < currentYear) { count++; } 
-                else { if (today >= valentinesThisYear) { count++; } }
+                    if (startDate <= valentinesThisYear && today >= valentinesThisYear) { count++; }
+                } else { if (today >= valentinesThisYear) { count++; } }
             }
             return count;
         }
+        function calculateCountdownToNextValentines() {
+            const today = new Date();
+            let nextValentinesYear = today.getFullYear();
+            let nextValentinesDate = new Date(nextValentinesYear, valentinesDayMonth, valentinesDayDate);
+            if (today > nextValentinesDate) {
+                nextValentinesYear++;
+                nextValentinesDate = new Date(nextValentinesYear, valentinesDayMonth, valentinesDayDate);
+            }
+            return calculateRelationshipDuration(today, nextValentinesDate); // Reutiliza a lógica de cálculo de duração
+        }
+        function calculateDuration(d1, d2) { // Função genérica de cálculo de duração
+            let years = d2.getFullYear() - d1.getFullYear();
+            let months = d2.getMonth() - d1.getMonth();
+            let days = d2.getDate() - d1.getDate();
+            if (days < 0) { months--; const daysInLastMonth = new Date(d2.getFullYear(), d2.getMonth(), 0).getDate(); days += daysInLastMonth; }
+            if (months < 0) { years--; months += 12; }
+            return { years, months, days };
+        }
+
+        // --- Função para Exibir Informações ---
         function displayRelationshipInfo() {
             const duration = calculateRelationshipDuration(relationshipStartDate);
-            const valentinesCount = calculateValentinesDays(relationshipStartDate);
+            const valentinesPassed = calculateValentinesPassed(relationshipStartDate);
+            
+            const today = new Date();
+            let nextValentinesYear = today.getFullYear();
+            if (today.getMonth() > valentinesDayMonth || (today.getMonth() === valentinesDayMonth && today.getDate() > valentinesDayDate)) {
+                nextValentinesYear++;
+            }
+            const nextValentines = new Date(nextValentinesYear, valentinesDayMonth, valentinesDayDate);
+            const countdown = calculateDuration(today, nextValentines);
+            
             const lang = currentLanguage;
+            
+            // Formata a string de duração
             let durationParts = [];
-            if (duration.years > 0) { durationParts.push(`${duration.years} ${langStrings[lang].yearsText}`); }
-            if (duration.months > 0) { durationParts.push(`${duration.months} ${langStrings[lang].monthsText}`); }
-            if (duration.days > 0) { durationParts.push(`${duration.days} ${langStrings[lang].daysText}`); }
-            let durationString = "";
-            if (durationParts.length === 0) { durationString = "Hoje!"; } 
-            else if (durationParts.length === 1) { durationString = durationParts[0]; } 
-            else if (durationParts.length === 2) { durationString = durationParts.join(` ${langStrings[lang].andText} `); } 
-            else { const lastPart = durationParts.pop(); durationString = durationParts.join(", ") + ` ${langStrings[lang].andText} ${lastPart}`; }
+            if (duration.years > 0) durationParts.push(`${duration.years} ${langStrings[lang].yearsText}`);
+            if (duration.months > 0) durationParts.push(`${duration.months} ${langStrings[lang].monthsText}`);
+            if (duration.days > 0) durationParts.push(`${duration.days} ${langStrings[lang].daysText}`);
+            let durationString = durationParts.length > 1 ? durationParts.slice(0, -1).join(', ') + ` ${langStrings[lang].andText} ` + durationParts.slice(-1) : durationParts[0] || "Hoje!";
+
+            // Formata a string de contagem regressiva
+            let countdownParts = [];
+            if (countdown.years > 0) countdownParts.push(`${countdown.years} ${langStrings[lang].yearsText}`);
+            if (countdown.months > 0) countdownParts.push(`${countdown.months} ${langStrings[lang].monthsText}`);
+            if (countdown.days > 0) countdownParts.push(`${countdown.days} ${langStrings[lang].daysText}`);
+            let countdownString = countdownParts.length > 1 ? countdownParts.slice(0, -1).join(', ') + ` ${langStrings[lang].andText} ` + countdownParts.slice(-1) : countdownParts[0] || "É hoje!";
+
+
+            // Remove e adiciona os elementos
             letterContent.querySelectorAll(".dynamic-info").forEach(el => el.remove());
-            const durationElement = document.createElement('p'); durationElement.id = "relationshipTime"; durationElement.classList.add("dynamic-info"); durationElement.style.marginTop = "20px"; durationElement.style.fontStyle = "italic"; durationElement.style.fontSize = "1em"; const durationSuffixKey = lang === 'pt' ? 'relationshipDurationSuffixPt' : 'relationshipDurationSuffixEs'; durationElement.innerHTML = `${langStrings[lang].relationshipDurationPrefix}<strong>${durationString}</strong> ${langStrings[lang][durationSuffixKey]}`; letterContent.appendChild(durationElement);
-            const valentinesElement = document.createElement('p'); valentinesElement.id = "valentinesCount"; valentinesElement.classList.add("dynamic-info"); valentinesElement.style.fontStyle = "italic"; valentinesElement.style.fontSize = "1em"; valentinesElement.innerHTML = `${langStrings[lang].valentinesCountText}<strong>${valentinesCount}</strong> ❤️`; letterContent.appendChild(valentinesElement);
-            const signatureElement = document.createElement('p'); signatureElement.id = "signature"; signatureElement.classList.add("dynamic-info"); signatureElement.style.marginTop = "5px"; signatureElement.style.textAlign = "right"; signatureElement.innerHTML = langStrings[lang].signature; letterContent.appendChild(signatureElement);
+
+            const infoContainer = document.createElement('div');
+            infoContainer.className = "dynamic-info";
+            infoContainer.style.marginTop = "20px";
+            infoContainer.style.fontStyle = "italic";
+            infoContainer.style.fontSize = "1em";
+            infoContainer.innerHTML = `
+                <p>${langStrings[lang].relationshipDurationPrefix}<strong>${durationString}</strong> ${langStrings[lang][lang === 'pt' ? 'relationshipDurationSuffixPt' : 'relationshipDurationSuffixEs']}</p>
+                <p>${langStrings[lang].valentinesPassedText}<strong>${valentinesPassed}</strong> ❤️</p>
+                <p>${langStrings[lang].valentinesCountdownText}<strong>${countdownString}</strong></p>
+                <p style="text-align: right; margin-top: 5px;">${langStrings[lang].signature}</p>
+            `;
+            letterContent.appendChild(infoContainer);
         }
+
+        // --- Lógica da Troca de Idioma ---
         function updateTextContent(lang) {
             document.documentElement.lang = lang.toUpperCase(); 
             localStorage.setItem('minisiteLanguage', lang); 
@@ -373,6 +424,7 @@
                 typeWriter(declarationParagraph, newDeclarationText, 0, () => { displayRelationshipInfo(); });
             }
         }
+
         function populateLanguageSelector() {
             if (!languageSelectorDropdown) return;
             languageSelectorDropdown.innerHTML = ''; 
@@ -380,6 +432,7 @@
             const esOption = document.createElement('option'); esOption.value = 'es'; esOption.textContent = '🇪🇸'; languageSelectorDropdown.appendChild(esOption);
             languageSelectorDropdown.value = currentLanguage; 
         }
+
         if (languageSelectorDropdown) {
             languageSelectorDropdown.addEventListener('change', function() {
                 currentLanguage = this.value;
@@ -388,6 +441,8 @@
                 startTitleScroller(langStrings[currentLanguage].pageTitle + "                "); 
             });
         }
+
+        // --- Lógica de Submissão da Senha ---
         submitPasswordButton.addEventListener('click', function() {
             const enteredPassword = passwordInput.value.trim().toLowerCase();
             if (enteredPassword === correctAnswer) {
@@ -420,12 +475,15 @@
                 passwordInput.focus();
             }
         });
+
         passwordInput.addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
                 event.preventDefault();
                 submitPasswordButton.click();
             }
         });
+
+        // --- Efeito de scroll do título da janela ---
         function startTitleScroller(text) {
             clearTimeout(titleScrollerInterval); 
             let currentDisplayTitle = text;
@@ -436,6 +494,8 @@
             }
             scroll();
         }
+
+        // --- Inicializações da Página ---
         if (totalSlides > 0) { showSlide(currentSlide); } 
         prepareShuffledPlaylist(); 
         populateLanguageSelector(); 
