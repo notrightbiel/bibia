@@ -1,171 +1,16 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR"> <!-- O atributo lang será atualizado pelo JS -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feliz dias dos enamorados, Bibia</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Poppins:wght@300;400;700&family=Great+Vibes&display=swap');
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #fce4ec;
-            color: #333;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden; 
-        }
-
-        /* Pop-up Inicial Styling */
-        .popup-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.7); 
-            display: flex; justify-content: center; align-items: center;
-            z-index: 1000; backdrop-filter: blur(5px); 
-        }
-        .popup-content {
-            background-color: #fff0f3; padding: 30px 40px; border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25); text-align: center;
-            max-width: 500px; width: 90%; border: 2px solid #e91e63; 
-            animation: fadeInPopup 0.5s ease-out; position: relative; 
-        }
-        @keyframes fadeInPopup { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-        .popup-content h2 { font-family: 'Parisienne', cursive; color: #c2185b; font-size: 2.5em; margin-top: 0; margin-bottom: 20px; }
-        .hypnosis-watch-svg { width: 120px; height: 150px; margin: 10px auto 15px auto; }
-        .watch-group { transform-origin: 50px 10px; animation: swingWatch 3s ease-in-out infinite alternate; }
-        @keyframes swingWatch { 0% { transform: rotate(-35deg); } 100% { transform: rotate(35deg); } }
-        .popup-content .popup-buttons { margin-top: 25px; display: flex; justify-content: space-around; }
-        .popup-content .popup-buttons button {
-            background-color: #e91e63; color: white; padding: 12px 25px; border: none;
-            border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease; min-width: 100px; z-index: 1001; 
-        }
-        .popup-content .popup-buttons button:hover { background-color: #c2185b; transform: translateY(-2px); }
-        .popup-content .popup-buttons button.no-button { background-color: #757575; }
-        .popup-content .popup-buttons button.no-button:hover { background-color: #555555; }
-
-        /* Rose Fireworks Styling */
-        #roseFireworksContainer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; overflow: hidden; }
-        .rose-particle { position: absolute; font-size: 20px; opacity: 0; }
-
-        /* Dancing Duck Styling */
-        #dancingDuck {
-            font-size: 2.5em; 
-            margin-left: 10px;
-            margin-right: 10px; /* Espaço antes do seletor de idioma */
-            display: inline-block; 
-            transition: transform 0.2s ease-in-out;
-        }
-        .duck-dance {
-            animation: dance 0.8s infinite;
-        }
-        @keyframes dance {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            25% { transform: translateY(-5px) rotate(-10deg); }
-            50% { transform: translateY(0) rotate(0deg); }
-            75% { transform: translateY(-5px) rotate(10deg); }
-        }
-        /* End Dancing Duck Styling */
-
-        .now-playing-bar {
-            background-color: #e91e63; color: white; text-align: center; padding: 10px 15px; 
-            width: 100%; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            z-index: 10; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; 
-        }
-        .now-playing-bar p { margin: 0 5px 0 0; display: inline-flex; align-items: center; }
-        .now-playing-bar .music-icon { margin-right: 8px; font-size: 1.1em; }
-        .now-playing-bar #songSelector, .now-playing-bar #languageSelectorDropdown { /* Estilo unificado */
-            background-color: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.5); padding: 5px 8px;
-            border-radius: 5px; font-family: 'Poppins', sans-serif; font-size: 0.9em; margin-left: 10px; outline: none; cursor: pointer;
-        }
-        .now-playing-bar #songSelector option, .now-playing-bar #languageSelectorDropdown option { 
-            background-color: #e91e63; color: white; 
-        }
-        .now-playing-bar #languageSelectorDropdown {
-            padding: 5px; /* Ajuste para não cortar a bandeira */
-            font-size: 1.1em; /* Para bandeiras ficarem com bom tamanho */
-             -webkit-appearance: none; /* Remove aparência padrão no Chrome/Safari */
-            -moz-appearance: none; /* Remove aparência padrão no Firefox */
-            appearance: none; /* Remove aparência padrão */
-            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); /* Seta customizada branca */
-            background-repeat: no-repeat;
-            background-position: right 8px center;
-            background-size: 10px;
-            padding-right: 25px; /* Espaço para a seta customizada */
-        }
-
-
-        .header { background-color: #f8bbd0; color: #c2185b; padding: 20px 0; text-align: center; width: 100%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); position:relative; }
-        .header h1 { font-family: 'Parisienne', cursive; font-size: 3.5em; margin: 0; }
-        .audio-player-container { position: absolute; top: -9999px; left: -9999px; width: 1px; height: 1px; overflow: hidden; opacity: 0; }
-        .container { max-width: 900px; width: 90%; margin: 30px auto; padding: 20px; background-color: white; border-radius: 12px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); text-align: center; }
-
-        .gallery-carousel { position: relative; max-width: 600px; margin: 20px auto; overflow: hidden; border-radius: 10px; background-color: #fff0f3; padding: 15px; box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
-        .carousel-slides { display: flex; transition: transform 0.5s ease-in-out; }
-        .carousel-slide { min-width: 100%; box-sizing: border-box; text-align: center; padding: 10px; }
-        .carousel-slide img { max-width: 100%; height: auto; display: block; margin: 0 auto 10px auto; border-radius: 8px; border: 3px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); object-fit: contain; max-height: 400px; }
-        .carousel-slide p { font-size: 1.1em; color: #555; line-height: 1.6; font-style: italic; }
-        .carousel-button { position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(194, 24, 91, 0.7); color: white; border: none; padding: 10px 15px; font-size: 1.5em; font-weight: bold; border-radius: 50%; cursor: pointer; z-index: 5; transition: background-color 0.3s ease; }
-        .carousel-button:hover { background-color: rgba(194, 24, 91, 1); }
-        .prev { left: 10px; }
-        .next { right: 10px; }
-
-        .declaration-container { margin-top: 30px; padding: 25px; background-color: #fff9fb; border-radius: 12px; border: 1px solid #f48fb1; box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
-        .password-prompt h2 { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.8em; color: #c2185b; margin-bottom: 15px; }
-        .password-prompt p { font-size: 1.1em; color: #555; margin-bottom: 20px; }
-        .password-prompt input[type="password"] { padding: 10px 15px; border-radius: 8px; border: 2px solid #f48fb1; width: 60%; max-width: 300px; margin-bottom: 15px; font-size: 1em; transition: border-color 0.3s ease, box-shadow 0.3s ease; }
-        .password-prompt input[type="password"]:focus { outline: none; border-color: #e91e63; box-shadow: 0 0 8px rgba(233, 30, 99, 0.3); }
-        .password-prompt button { background-color: #e91e63; color: white; padding: 12px 30px; border: none; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease; }
-        .password-prompt button:hover { background-color: #c2185b; transform: translateY(-2px); }
-        .error-message { color: red; font-weight: bold; margin-top: 10px; }
-
-        .letter-content { 
-            display: none; background-color: #fffdfd; padding: 30px; border-radius: 8px; 
-            border: 1px dashed #e91e63; box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
-            margin-top: 20px; animation: unfoldLetter 0.8s ease-out forwards; 
-            transform-origin: top center; text-align: left; position: relative; 
-        }
-        .letter-content h3 { font-family: 'Great Vibes', cursive; font-size: 3em; color: #c2185b; margin-bottom: 20px; text-align: center; border-bottom: 1px solid #f8bbd0; padding-bottom: 10px; }
-        .letter-content p { font-family: 'Poppins', sans-serif; font-size: 1.2em; line-height: 1.8; color: #333; white-space: pre-line; }
-        
-        .typewriter-text::after { content: '|'; color: #c2185b; animation: blink-caret-letter 0.75s step-end infinite; }
-        @keyframes blink-caret-letter { from, to { opacity: 1; } 50% { opacity: 0; } }
-        @keyframes unfoldLetter { 0% { opacity: 0; transform: scaleY(0.1) rotateX(-90deg); } 70% { opacity: 0.7; transform: scaleY(1.05) rotateX(10deg); } 100% { opacity: 1; transform: scaleY(1) rotateX(0deg); } }
-
-        .footer { text-align: center; padding: 20px 0; margin-top: auto; width: 100%; background-color: #f8bbd0; color: #880e4f; font-size: 0.9em; }
-        .heart { color: #e91e63; font-size: 1.5em; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-
-        @media (max-width: 768px) {
-            .header h1 { font-size: 2.8em; } /* Ajustado tamanho do titulo principal */
-            .gallery-carousel { max-width: 95%; }
-            .carousel-slide img { max-height: 300px; }
-            .password-prompt h2 { font-size: 1.5em; }
-            .password-prompt input[type="password"] { width: 80%; }
-            .letter-content h3 { font-size: 2.5em; }
-            .letter-content p { font-size: 1.1em; }
-            .now-playing-bar { font-size: 0.8em; padding: 8px 10px;} 
-            .now-playing-bar #songSelector, .now-playing-bar #languageSelectorDropdown { font-size: 0.85em; margin-left: 5px; margin-top: 5px;}
-            .popup-content h2 { font-size: 2em; }
-            .popup-content { padding: 20px; }
-        }
-         @media (max-width: 480px) {
-            .header h1 { font-size: 2.2em; }
-            .letter-content h3 { font-size: 2em; }
-            .carousel-slide img { max-height: 220px; }
-            .carousel-button { padding: 8px 12px; font-size: 1.2em;}
-            .now-playing-bar { font-size: 0.75em; padding: 6px 8px; flex-direction: column;}
-            .now-playing-bar p { margin-bottom: 5px; }
-            .now-playing-bar #songSelector, .now-playing-bar #languageSelectorDropdown { font-size: 0.8em; margin-left: 0; margin-top: 5px; width: 60%;}
-            .popup-content h2 { font-size: 1.8em; }
-            .popup-content .popup-buttons button { padding: 10px 15px; font-size: 1em; }
-        }
-    </style>
+    <title>Feliz dias dos enamorados, Bibia</title> <!-- O título também será atualizado pelo JS -->
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Poppins:wght@300;400;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script> 
+    <link rel="stylesheet" href="estilo.css"> <!-- Chamada para o CSS externo -->
 </head>
 <body>
     <!-- Pop-up Inicial -->
@@ -187,19 +32,23 @@
             </div>
         </div>
     </div>
+    <!-- Fim Pop-up Inicial -->
 
+    <!-- Rose Fireworks Container -->
     <div id="roseFireworksContainer"></div>
+    <!-- End Rose Fireworks Container -->
 
+    <!-- Barra "Tocando Agora" com Seletores -->
     <div class="now-playing-bar">
-        <p><span class="music-icon">🎵</span> <span data-lang="nowPlaying">Tocando agora</span>: <span id="currentSongName" data-lang-default="Nenhuma música">Nenhuma música</span></p>
+        <p><span class="music-icon">🎵</span> <span data-lang="nowPlaying">Tocando agora</span>: <span id="currentSongName" data-lang-default="Nenhuma música" aria-live="polite">Nenhuma música</span></p> 
         <span id="dancingDuck">🦆</span> 
         <select id="songSelector"></select> 
-        <select id="languageSelectorDropdown"></select> <!-- Seletor de idioma movido para cá -->
+        <select id="languageSelectorDropdown"></select> 
     </div>
+    <!-- Fim Barra "Tocando Agora" -->
     
     <header class="header">
-        <!-- A div.language-switcher foi removida daqui -->
-        <h1 data-lang="mainTitle">Para Meu Amor, Bibia <span class="heart">❤</span></h1>
+        <h1 data-lang="mainTitle">Para Meu Amor Bibia <span class="heart">❤</span></h1>
     </header>
 
     <div class="audio-player-container">
@@ -207,15 +56,16 @@
     </div>
 
     <main class="container">
+        <!-- Gallery Section with Carousel -->
         <section class="gallery-carousel">
             <div class="carousel-slides">
                 <div class="carousel-slide">
-                    <img src="images/image1.jpg" alt="Bibia - Foto 1" data-lang-alt="altImage1"
+                    <img src="images/image1.jpg" alt="Bibia - Foto 1" data-lang-alt="altImage1" loading="lazy"
                          onerror="this.onerror=null;this.src='https://placehold.co/600x400/f8bbd0/c2185b?text=Imagem+1+Nao+Encontrada';">
                     <p data-lang="captionImage1">"Seu sorriso ilumina meus dias..."</p>
                 </div>
                 <div class="carousel-slide">
-                    <img src="images/image2.jpg" alt="Bibia - Foto 2" data-lang-alt="altImage2"
+                    <img src="images/image2.jpg" alt="Bibia - Foto 2" data-lang-alt="altImage2" loading="lazy"
                          onerror="this.onerror=null;this.src='https://placehold.co/600x400/f8bbd0/c2185b?text=Imagem+2+Nao+Encontrada';">
                     <p data-lang="captionImage2">"...e seus olhinhos de jabuticaba me encantam!"</p>
                 </div>
@@ -223,6 +73,7 @@
             <button class="carousel-button prev" onclick="moveSlide(-1)">&#10094;</button>
             <button class="carousel-button next" onclick="moveSlide(1)">&#10095;</button>
         </section>
+        <!-- End Gallery Section -->
 
         <section class="declaration-container">
             <div id="passwordPrompt" class="password-prompt">
@@ -236,15 +87,17 @@
             <div id="letterContent" class="letter-content"> 
                 <h3 data-lang="letterTitle">Declaração do Último Romântico</h3>
                 <p class="min-h-[100px]" data-lang-declaration="letterContentText" 
-                   data-text-source-pt="Querida Bibia,<br><br>Desde que você entrou na minha vida, tudo se tornou mais colorido e cheio de alegria. Seu jeito único, seus olhinhos de jabuticaba e a forma como você vê o mundo me encantam todos os dias.<br><br>Neste Dia dos Namorados, quero demonstrar o quanto você é importante para mim. Você é minha inspiração, minha cúmplice e o meu amor.<br><br>Espero que este pequeno gesto possa demonstrar um pouco do imenso carinho que sinto por você. E se a sua resposta para aquela pergunta for sim, saiba que você acabou de me fazer a pessoa mais feliz do mundo!<br><br>Com todo o meu amor,<br>Gabriel."
-                   data-text-source-es="Querida Bibia,<br><br>Desde que entraste en mi vida, todo se ha vuelto más colorido y lleno de alegría. Tu forma de ser única, tus ojitos de jabuticaba y la forma en que ves el mundo me encantan todos los días.<br><br>En este Día de San Valentín, quiero demostrar cuánto significas para mí. Eres mi inspiración, mi cómplice y mi amor.<br><br>Espero que este pequeño gesto pueda demostrar un poco del inmenso cariño que siento por ti. Y si tu respuesta a esa pregunta es sí, ¡que sepas que acabas de hacerme la persona más feliz del mundo!<br><br>Con todo mi amor,<br>Gabriel."></p>
+                   data-text-source-pt="Querida Bibia,<br><br>Desde que você entrou na minha vida, tudo se tornou mais colorido e cheio de alegria. Seu jeito único, seus olhinhos de jabuticaba e a forma como você vê o mundo me encantam todos os dias.<br><br>Neste Dia dos Namorados, quero demonstrar o quanto você é importante para mim. Você é minha inspiração, minha cúmplice e o meu amor.<br><br>Espero que este pequeno gesto possa demonstrar um pouco do imenso carinho que sinto por você. E se a sua resposta para aquela pergunta for sim, saiba que você acabou de me fazer a pessoa mais feliz do mundo!"
+                   data-text-source-es="Querida Bibia,<br><br>Desde que entraste en mi vida, todo se ha vuelto más colorido y lleno de alegría. Tu forma de ser única, tus ojitos de jabuticaba y la forma en que ves el mundo me encantan todos los días.<br><br>En este Día de San Valentín, quiero demostrar cuánto significas para mí. Eres mi inspiración, mi cómplice y mi amor.<br><br>Espero que este pequeno gesto pueda demostrar un poco del inmenso cariño que siento por ti. Y si tu respuesta a esa pregunta es sí, ¡que sepas que acabas de hacerme la persona más feliz del mundo!"></p>
+                <!-- O tempo de namoro, dias dos namorados e assinatura serão adicionados aqui pelo JavaScript -->
             </div>
         </section>
     </main>
 
     <footer class="footer">
         <p data-lang="footerMadeWithLove">Feito com <span class="heart">❤</span> especialmente para Bibia!</p>
-        <p data-lang="footerCopyright">&copy; 2025 - Um dia dos namorados inesquecível.</p>
+        <p><a href="pagina2.html" class="back-link" style="margin-top:10px; display:inline-block;" data-lang="viewFutureGallery">Nossa galeria de fotos</a></p> 
+        <p data-lang="footerCopyright" style="margin-top:10px;">&copy; 2025 - Um dia dos namorados inesquecível.</p>
     </footer>
 
     <script>
@@ -253,7 +106,6 @@
         const popupNoButton = document.getElementById('popupNoButton');
         const roseFireworksContainer = document.getElementById('roseFireworksContainer');
         const dancingDuck = document.getElementById('dancingDuck'); 
-
         const passwordInput = document.getElementById('passwordInput');
         const submitPasswordButton = document.getElementById('submitPasswordButton');
         const passwordPrompt = document.getElementById('passwordPrompt');
@@ -263,10 +115,12 @@
         const declarationParagraph = letterContent.querySelector('p');
         const currentSongNameDisplay = document.getElementById('currentSongName');
         const songSelector = document.getElementById('songSelector'); 
-        const languageSelectorDropdown = document.getElementById('languageSelectorDropdown'); // Novo seletor de idioma
-
+        const languageSelectorDropdown = document.getElementById('languageSelectorDropdown'); 
         const correctAnswer = "oss";
-        
+        const relationshipStartDate = new Date(2022, 10, 26); 
+        const valentinesDayMonth = 5; 
+        const valentinesDayDate = 12;
+
         const originalSongList = [
             { path: 'music/blurry.mp3', displayNamePt: 'Blurry', displayNameEs: 'Blurry' },
             { path: 'music/justlikeheaven.mp3', displayNamePt: 'Just Like Heaven', displayNameEs: 'Just Like Heaven' },
@@ -275,8 +129,11 @@
         let shuffledPlaylist = []; 
         let currentTrackInShuffledList = 0; 
         let currentLanguage = 'pt'; 
+        let currentSlide = 0;
+        const slides = document.querySelector('.carousel-slides');
+        const totalSlides = slides ? slides.children.length : 0; 
+        let titleScrollerInterval; 
 
-        // Language Strings (permanecem os mesmos)
         const langStrings = {
             pt: {
                 pageTitle: "Feliz dias dos enamorados, Bibia ❤️",
@@ -297,6 +154,15 @@
                 passwordButton: "Revelar Mensagem",
                 passwordError: "Ops! Resposta incorreta. Tente novamente.",
                 letterTitle: "Declaração do Último Romântico",
+                relationshipDurationPrefix: "Nosso tempo juntos: ",
+                relationshipDurationSuffixPt: "(desde 26/11/2022).",
+                valentinesCountText: "Dias dos Namorados juntos: ",
+                signature: "<br><br>Com todo o meu amor,<br>Gabriel.",
+                yearsText: "anos",
+                monthsText: "meses",
+                daysText: "dias",
+                andText: "e",
+                viewFutureGallery: "Nossa Galeria de fotos", // MODIFICADO AQUI
                 footerMadeWithLove: "Feito com <span class=\"heart\">❤</span> especialmente para Bibia!",
                 footerCopyright: "&copy; 2025 - Um dia dos namorados inesquecível."
             },
@@ -308,7 +174,7 @@
                 popupNo: "No...",
                 nowPlaying: "Escuchando ahora",
                 noMusic: "Ninguna canción",
-                mainTitle: "Para Mi Amor, Bibia <span class=\"heart\">❤</span>",
+                mainTitle: "Para Mi Amor Bibia <span class=\"heart\">❤</span>",
                 altImage1: "Bibia - Foto 1",
                 captionImage1: "\"Tu sonrisa ilumina mis días...\"",
                 altImage2: "Bibia - Foto 2",
@@ -319,23 +185,24 @@
                 passwordButton: "Revelar Mensaje",
                 passwordError: "¡Uy! Respuesta incorrecta. Inténtalo de nuevo.",
                 letterTitle: "Declaración del Último Romántico",
+                relationshipDurationPrefix: "Nuestro tiempo juntos: ",
+                relationshipDurationSuffixEs: "(desde el 26/11/2022).",
+                valentinesCountText: "Días de San Valentín juntos: ",
+                signature: "<br><br>Con todo mi amor,<br>Gabriel.",
+                yearsText: "años",
+                monthsText: "meses",
+                daysText: "días",
+                andText: "y",
+                viewFutureGallery: "Nuestra Galería de fotos", // MODIFICADO AQUI
                 footerMadeWithLove: "¡Hecho con <span class=\"heart\">❤</span> especialmente para Bibia!",
                 footerCopyright: "&copy; 2025 - Un Día de San Valentín inolvidable."
             }
         };
 
-        // Carousel Logic (permanece o mesmo)
-        let currentSlide = 0;
-        const slides = document.querySelector('.carousel-slides');
-        const totalSlides = slides ? slides.children.length : 0; 
         function showSlide(index) { if (slides) { slides.style.transform = `translateX(-${index * 100}%)`; } }
         function moveSlide(n) { if (totalSlides > 0) { currentSlide = (currentSlide + n + totalSlides) % totalSlides; showSlide(currentSlide); } }
-
-        // Rose Fireworks Logic (permanece o mesmo)
         function createRoseParticle(x, y) { const particle = document.createElement('div'); particle.classList.add('rose-particle'); particle.innerHTML = '🌹'; particle.style.left = x + 'px'; particle.style.top = y + 'px'; roseFireworksContainer.appendChild(particle); const angle = Math.random() * Math.PI * 2; const speed = Math.random() * 5 + 2; const gravity = 0.1; let vx = Math.cos(angle) * speed; let vy = Math.sin(angle) * speed; let opacity = 1; let rotation = 0; const rotationSpeed = (Math.random() - 0.5) * 20; function animateParticle() { vx *= 0.98; vy += gravity; particle.style.left = (parseFloat(particle.style.left) + vx) + 'px'; particle.style.top = (parseFloat(particle.style.top) + vy) + 'px'; rotation += rotationSpeed; particle.style.transform = `rotate(${rotation}deg) scale(${opacity})`; opacity -= 0.015; if (opacity > 0) { requestAnimationFrame(animateParticle); } else { particle.remove(); } } requestAnimationFrame(() => { particle.style.opacity = 1; requestAnimationFrame(animateParticle); }); }
         function launchRoseFirework(count = 1) { for(let i = 0; i < count; i++) { const startX = Math.random() * window.innerWidth; const startY = window.innerHeight + 50; const numParticles = Math.floor(Math.random() * 20) + 15; const launchDuration = Math.random() * 500 + 300; setTimeout(() => { const explosionX = startX; const explosionY = Math.random() * (window.innerHeight / 2) + (window.innerHeight / 4); for (let j = 0; j < numParticles; j++) { createRoseParticle(explosionX, explosionY); } }, launchDuration); } }
-        
-        // Pop-up Logic (permanece o mesmo)
         popupYesButton.addEventListener('click', () => {
             initialPopup.style.display = 'none';
             launchRoseFirework(5); 
@@ -347,8 +214,6 @@
             }
         });
         popupNoButton.addEventListener('click', () => { window.location.href = 'https://www.google.com'; });
-
-        // Music Player Logic (permanece o mesmo, exceto a chamada para populateSongSelector que agora acontece em updateTextContent)
         function shuffleArray(array) { let currentIndex = array.length, randomIndex; while (currentIndex !== 0) { randomIndex = Math.floor(Math.random() * currentIndex); currentIndex--; [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]]; } return array; }
         function prepareShuffledPlaylist() { shuffledPlaylist = shuffleArray([...originalSongList]); currentTrackInShuffledList = 0; }
         function formatSongName(songObject) { 
@@ -386,9 +251,7 @@
         backgroundMusic.addEventListener('ended', playNextSongInShuffle);
         backgroundMusic.onpause = () => { if(dancingDuck) dancingDuck.classList.remove('duck-dance'); };
         backgroundMusic.onplay = () => { if(dancingDuck) dancingDuck.classList.add('duck-dance'); };
-
-
-        function populateSongSelector() { // Usado também pelo seletor de idioma
+        function populateSongSelector() { 
             if (!songSelector) return; 
             songSelector.innerHTML = ''; 
             originalSongList.forEach(songObj => {
@@ -408,7 +271,6 @@
                  currentSongNameDisplay.textContent = langStrings[currentLanguage].noMusic;
             }
         }
-
         if(songSelector){ 
             songSelector.addEventListener('change', function() {
                 const selectedPath = this.value;
@@ -418,8 +280,6 @@
                 }
             });
         }
-
-        // Typewriter (Classic)
         function typeWriter(element, text, speed, callback) {
             let i = 0;
             element.innerHTML = ""; 
@@ -441,67 +301,93 @@
             }
             type();
         }
-        
-        // Language Switch Logic
+        function calculateRelationshipDuration(startDate) {
+            const today = new Date(2025, 5, 5); 
+            let years = today.getFullYear() - startDate.getFullYear();
+            let months = today.getMonth() - startDate.getMonth();
+            let days = today.getDate() - startDate.getDate();
+            if (days < 0) { months--; const daysInLastMonth = new Date(today.getFullYear(), today.getMonth(), 0).getDate(); days += daysInLastMonth; }
+            if (months < 0) { years--; months += 12; }
+            return { years, months, days };
+        }
+        function calculateValentinesDays(startDate) {
+            const today = new Date(2025, 5, 5); 
+            let count = 0; const startYear = startDate.getFullYear(); const currentYear = today.getFullYear();
+            for (let year = startYear; year <= currentYear; year++) {
+                const valentinesThisYear = new Date(year, valentinesDayMonth, valentinesDayDate);
+                if (year === startYear) { 
+                    if (startDate < valentinesThisYear && today >= valentinesThisYear) { count++; } 
+                    else if (startDate < valentinesThisYear && year < currentYear) { count++; }
+                } else if (year < currentYear) { count++; } 
+                else { if (today >= valentinesThisYear) { count++; } }
+            }
+            return count;
+        }
+        function displayRelationshipInfo() {
+            const duration = calculateRelationshipDuration(relationshipStartDate);
+            const valentinesCount = calculateValentinesDays(relationshipStartDate);
+            const lang = currentLanguage;
+            let durationParts = [];
+            if (duration.years > 0) { durationParts.push(`${duration.years} ${langStrings[lang].yearsText}`); }
+            if (duration.months > 0) { durationParts.push(`${duration.months} ${langStrings[lang].monthsText}`); }
+            if (duration.days > 0) { durationParts.push(`${duration.days} ${langStrings[lang].daysText}`); }
+            let durationString = "";
+            if (durationParts.length === 0) { durationString = "Hoje!"; } 
+            else if (durationParts.length === 1) { durationString = durationParts[0]; } 
+            else if (durationParts.length === 2) { durationString = durationParts.join(` ${langStrings[lang].andText} `); } 
+            else { const lastPart = durationParts.pop(); durationString = durationParts.join(", ") + ` ${langStrings[lang].andText} ${lastPart}`; }
+            letterContent.querySelectorAll(".dynamic-info").forEach(el => el.remove());
+            const durationElement = document.createElement('p'); durationElement.id = "relationshipTime"; durationElement.classList.add("dynamic-info"); durationElement.style.marginTop = "20px"; durationElement.style.fontStyle = "italic"; durationElement.style.fontSize = "1em"; const durationSuffixKey = lang === 'pt' ? 'relationshipDurationSuffixPt' : 'relationshipDurationSuffixEs'; durationElement.innerHTML = `${langStrings[lang].relationshipDurationPrefix}<strong>${durationString}</strong> ${langStrings[lang][durationSuffixKey]}`; letterContent.appendChild(durationElement);
+            const valentinesElement = document.createElement('p'); valentinesElement.id = "valentinesCount"; valentinesElement.classList.add("dynamic-info"); valentinesElement.style.fontStyle = "italic"; valentinesElement.style.fontSize = "1em"; valentinesElement.innerHTML = `${langStrings[lang].valentinesCountText}<strong>${valentinesCount}</strong> ❤️`; letterContent.appendChild(valentinesElement);
+            const signatureElement = document.createElement('p'); signatureElement.id = "signature"; signatureElement.classList.add("dynamic-info"); signatureElement.style.marginTop = "5px"; signatureElement.style.textAlign = "right"; signatureElement.innerHTML = langStrings[lang].signature; letterContent.appendChild(signatureElement);
+        }
         function updateTextContent(lang) {
             document.documentElement.lang = lang.toUpperCase(); 
+            localStorage.setItem('minisiteLanguage', lang); // Salva o idioma para a página da galeria
             const elements = document.querySelectorAll('[data-lang]');
             elements.forEach(el => {
                 const key = el.dataset.lang;
-                if (langStrings[lang] && langStrings[lang][key]) {
-                    el.innerHTML = langStrings[lang][key]; 
-                }
+                if (langStrings[lang] && langStrings[lang][key]) { el.innerHTML = langStrings[lang][key]; }
             });
             const altElements = document.querySelectorAll('[data-lang-alt]');
             altElements.forEach(el => {
                 const key = el.dataset.langAlt;
-                if (langStrings[lang] && langStrings[lang][key]) {
-                    el.alt = langStrings[lang][key];
-                }
+                if (langStrings[lang] && langStrings[lang][key]) { el.alt = langStrings[lang][key]; }
             });
             const placeholderElements = document.querySelectorAll('[data-lang-placeholder]');
             placeholderElements.forEach(el => {
                 const key = el.dataset.langPlaceholder;
-                 if (langStrings[lang] && langStrings[lang][key]) {
-                    el.placeholder = langStrings[lang][key];
-                }
+                 if (langStrings[lang] && langStrings[lang][key]) { el.placeholder = langStrings[lang][key]; }
             });
             const pageTitleKey = 'pageTitle';
-             if (langStrings[lang] && langStrings[lang][pageTitleKey]) {
-                document.title = langStrings[lang][pageTitleKey];
-            }
+             if (langStrings[lang] && langStrings[lang][pageTitleKey]) { document.title = langStrings[lang][pageTitleKey]; }
             const defaultSongDisplay = document.querySelector('[data-lang-default]');
             if(defaultSongDisplay && backgroundMusic.paused && !backgroundMusic.currentTime) { 
                 currentSongNameDisplay.textContent = langStrings[lang].noMusic;
             }
             populateSongSelector(); 
-            if(languageSelectorDropdown) languageSelectorDropdown.value = lang; // Sincroniza o seletor de idioma
+            if(languageSelectorDropdown) languageSelectorDropdown.value = lang; 
+            if (letterContent.style.display === 'block') {
+                const declarationTextKey = `data-text-source-${currentLanguage}`;
+                const newDeclarationText = declarationParagraph.getAttribute(declarationTextKey) || declarationParagraph.getAttribute('data-text-source-pt');
+                typeWriter(declarationParagraph, newDeclarationText, 0, () => { displayRelationshipInfo(); });
+            }
         }
-
         function populateLanguageSelector() {
             if (!languageSelectorDropdown) return;
-            languageSelectorDropdown.innerHTML = ''; // Limpa opções
-            
-            const ptOption = document.createElement('option');
-            ptOption.value = 'pt';
-            ptOption.textContent = '🇧🇷'; // Apenas bandeira
-            languageSelectorDropdown.appendChild(ptOption);
-
-            const esOption = document.createElement('option');
-            esOption.value = 'es';
-            esOption.textContent = '🇪🇸'; // Apenas bandeira
-            languageSelectorDropdown.appendChild(esOption);
-
-            languageSelectorDropdown.value = currentLanguage; // Define o idioma atual como selecionado
+            languageSelectorDropdown.innerHTML = ''; 
+            const ptOption = document.createElement('option'); ptOption.value = 'pt'; ptOption.textContent = '🇧🇷'; languageSelectorDropdown.appendChild(ptOption);
+            const esOption = document.createElement('option'); esOption.value = 'es'; esOption.textContent = '🇪🇸'; languageSelectorDropdown.appendChild(esOption);
+            languageSelectorDropdown.value = currentLanguage; 
         }
-
         if (languageSelectorDropdown) {
             languageSelectorDropdown.addEventListener('change', function() {
                 currentLanguage = this.value;
                 updateTextContent(this.value);
+                clearTimeout(titleScrollerInterval); 
+                startTitleScroller(langStrings[currentLanguage].pageTitle + "                "); 
             });
         }
-
         submitPasswordButton.addEventListener('click', function() {
             const enteredPassword = passwordInput.value.trim().toLowerCase();
             if (enteredPassword === correctAnswer) {
@@ -510,10 +396,8 @@
                 errorMessage.style.display = 'none';
                 const declarationTextKey = `data-text-source-${currentLanguage}`;
                 const originalText = declarationParagraph.getAttribute(declarationTextKey) || declarationParagraph.getAttribute('data-text-source-pt'); 
-                setTimeout(() => {
-                    declarationParagraph.contentEditable = "false"; 
-                    typeWriter(declarationParagraph, originalText, 50);
-                }, 800); 
+                typeWriter(declarationParagraph, originalText, 50, () => { displayRelationshipInfo(); }); 
+                setTimeout(() => { declarationParagraph.contentEditable = "false";  }, 100);
                 if (backgroundMusic.paused && (shuffledPlaylist.length > 0 && currentTrackInShuffledList < shuffledPlaylist.length)) {
                      const songToPlay = shuffledPlaylist[currentTrackInShuffledList] || shuffledPlaylist[0];
                      if(songToPlay) loadAndPlaySong(songToPlay);
@@ -536,29 +420,27 @@
                 passwordInput.focus();
             }
         });
-
         passwordInput.addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
                 event.preventDefault();
                 submitPasswordButton.click();
             }
         });
-
-        // Inicializações ao carregar a página
-        if (totalSlides > 0) { showSlide(currentSlide); }
-        prepareShuffledPlaylist(); 
-        populateLanguageSelector(); // Popula o novo seletor de idioma
-        updateTextContent(currentLanguage); // Define o idioma inicial e os textos
-
-        (function titleScroller() { 
-            let currentTitle = document.title;
-            if (currentTitle.length < 30) { 
-                currentTitle += "                "; 
+        function startTitleScroller(text) {
+            clearTimeout(titleScrollerInterval); 
+            let currentDisplayTitle = text;
+            function scroll() {
+                document.title = currentDisplayTitle;
+                currentDisplayTitle = currentDisplayTitle.substring(1) + currentDisplayTitle.substring(0,1);
+                titleScrollerInterval = setTimeout(scroll, 300);
             }
-            document.title = currentTitle.substring(1) + currentTitle.substring(0,1);
-            setTimeout(titleScroller, 300); 
-        }()); 
-
+            scroll();
+        }
+        if (totalSlides > 0) { showSlide(currentSlide); } 
+        prepareShuffledPlaylist(); 
+        populateLanguageSelector(); 
+        updateTextContent(currentLanguage); 
+        startTitleScroller(langStrings[currentLanguage].pageTitle + "                ");
     </script>
 </body>
 </html>
