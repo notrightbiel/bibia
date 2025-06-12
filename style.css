@@ -1,0 +1,184 @@
+/* Reset e Estilos Gerais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+/* Tela de Boas-Vindas */
+#welcome-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 1000;
+    transition: opacity 1s ease-out;
+}
+
+.welcome-box {
+    padding: 2rem;
+}
+
+.welcome-box h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+#start-button {
+    background-color: #fff;
+    color: #6a11cb;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#start-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+
+/* Esconde a tela de boas-vindas quando a classe 'hidden' é adicionada */
+#welcome-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Conteúdo Principal (Inicialmente oculto) */
+#story-container {
+    opacity: 0;
+    transition: opacity 1s ease-in;
+}
+
+#story-container.visible {
+    opacity: 1;
+}
+
+/* Estilo dos Capítulos de Tela Cheia */
+.chapter {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Efeito Parallax */
+}
+
+/* Sobreposição escura para legibilidade */
+.chapter::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+/* Caixa de Conteúdo de cada Capítulo */
+.chapter-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 2rem 3rem;
+    max-width: 600px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    
+    /* Animação de entrada */
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Ativa a animação quando o capítulo está visível */
+.chapter-content.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.chapter-content h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: #fca311; /* Cor de destaque */
+}
+
+.chapter-content h3 {
+    font-size: 1.5rem;
+    margin: 0.5rem 0;
+    font-weight: 400;
+}
+
+.chapter-content p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    font-weight: 300;
+}
+
+.chapter-content .ages {
+    margin-top: 1rem;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+/* === PERSONALIZAÇÃO DAS IMAGENS DE FUNDO === */
+/* Troque as URLs abaixo por links de fotos suas ou de bancos de imagem. */
+
+.chapter-1 {
+    background-image: url('img/bg.webp');
+}
+.chapter-2 {
+    background-image: url('img/bg.webp');
+}
+.chapter-3 {
+    background-image: url('img/bg.webp');
+}
+.chapter-4 {
+    background-image: url('img/bg.webp');
+}
+.chapter-5 {
+    background-image: url('img/bg.webp');
+}
+.chapter-6 {
+    background-image: url('img/bg.webp');
+}
+
+/* Media Query para telas menores */
+@media (max-width: 768px) {
+    .chapter-content {
+        padding: 1.5rem;
+        max-width: 90%;
+    }
+    .chapter-content h2 {
+        font-size: 1.5rem;
+    }
+    .chapter-content h3 {
+        font-size: 1.2rem;
+    }
+    .chapter-content p {
+        font-size: 1rem;
+    }
+}
